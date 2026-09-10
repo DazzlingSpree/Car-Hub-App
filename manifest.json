@@ -1,0 +1,17 @@
+{
+  "name": "Mysthood Cyberdeck HUD",
+  "short_name": "Mysthood HUD",
+  "start_url": "./?installed=true",
+  "display": "standalone",
+  "background_color": "#030407",
+  "theme_color": "#ff1a35",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "apple-touch-icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
