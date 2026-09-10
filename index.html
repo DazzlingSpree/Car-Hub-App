@@ -6,28 +6,30 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Mysthood HUD">
-  <!-- PWA App Icon for Safari Add to Home Screen -->
-  <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='120' fill='%2305070e'/%3E%3Cpath d='M256 60 L440 400 L350 400 L256 220 L162 400 L72 400 Z' fill='url(%23g)'/%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%2300f2fe'/%3E%3Cstop offset='100%25' stop-color='%23a855f7'/%3E%3C/linearGradient%3E%3C/defs%3E%3C/svg%3E">
-  <title>Mysthood Cyberdeck // Matrix</title>
+  <!-- Valid Raster PWA Icon (Apple Safari Compatible) -->
+  <link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAYAAAA9zQYyAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH6AkMDhI388hH5wAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAADxUlEQVR42u3YQWsTURjG8ecmTZo2bVpqq62ttmKlIiiIFyo++1l894N4FRFBQUQRxIuKgoqg4MGD4MGD4EG8CIKX3oo3P4EXB7F2pZ3SpE1mkpmjO6p7s8lM0sz/e56FvSSQvMz7PO/kTYIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD4H1hcfN6sLn5tnj3/8H8+n28mi8VmMhi+a4bD3eb29nZza+vVr2/fvv9489btZjh422xvv/GNNfj/kM1mm83t7Te/vnr18MPL5w8/L58/fP/+/t6r7e03v64ufmvms9l2Pp9v59/n018mAPjTdnb25vsH+xu7ux82+gfLzXa7t9XpLjY7vbvN/f2d5tbWq43+/gfz7O+L38Afdf8g3+z1v97Y3v640dvdajbbnc1O90qz291t9vb2mpubr15vbLz+3OztvT1/9+s1AH8ne3tfNvf2dpvd3Q+bndXrzVandavTudZsdbab3e5Gc3f3w+bbt1+sfgf4YV+97s63fv3a2PnxUaNzrd3pD7Y7m60b7Ub7VnN39/1me/v151evPlj9Af6k/f3/q4ODA/Ns/95Wu9PZ6nS3m53e5eZg8L7Z7e82+wcvNre2fn5/5R8AAAAAAAAAAAAAAAAAAP8lOzt7zZ13e83+r7fN7asbzU7narM/+NBst/c3u93uv/MvAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwJj5Cw+o/p/vL6j7AAAAAElFTkSuQmCC">
+  <title>Mysthood Cyberdeck // Crimson</title>
   <style>
     :root {
-      --bg: #030408;
-      --card-bg: rgba(10, 15, 29, 0.76);
-      --card-border: rgba(168, 85, 247, 0.3);
-      --neon-cyan: #00f2fe;
-      --neon-violet: #a855f7;
-      --neon-emerald: #10b981;
-      --neon-amber: #f59e0b;
-      --text: #f8fafc;
-      --text-dim: #94a3b8;
-      --glow: 0 8px 32px 0 rgba(0, 0, 0, 0.7);
+      --bg: #030407;
+      --card-bg: rgba(12, 12, 16, 0.82);
+      --card-border: rgba(255, 26, 53, 0.35);
+      --neon-red: #ff1a35;
+      --deep-red: #990014;
+      --glow-red: rgba(255, 26, 53, 0.45);
+      --pure-white: #ffffff;
+      --text-muted: #94a3b8;
+      --silver: #cbd5e1;
+      --accent-amber: #f59e0b;
+      --accent-green: #10b981;
+      --glass-glow: 0 8px 32px 0 rgba(0, 0, 0, 0.85);
     }
     * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
     body {
       margin: 0;
       padding: env(safe-area-inset-top, 24px) 16px env(safe-area-inset-bottom, 24px);
-      background: radial-gradient(circle at 50% -10%, #1e0d3b 0%, #030408 85%);
-      color: var(--text);
+      background: radial-gradient(circle at 50% -10%, #2b0007 0%, #030407 80%);
+      color: var(--pure-white);
       font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
       min-height: 100vh;
       display: flex;
@@ -36,76 +38,91 @@
       user-select: none;
       overflow-x: hidden;
     }
-    .wrap { width: 100%; max-width: 500px; display: flex; flex-direction: column; gap: 12px; }
+    .container { width: 100%; max-width: 500px; display: flex; flex-direction: column; gap: 12px; }
+
+    /* Header */
     .header { display: flex; justify-content: space-between; align-items: center; padding: 0 4px; }
-    .brand {
-      font-size: 20px;
+    .brand-title {
+      font-size: 21px;
       font-weight: 900;
-      letter-spacing: 2px;
+      letter-spacing: 2.2px;
       text-transform: uppercase;
-      background: linear-gradient(90deg, var(--neon-cyan), var(--neon-violet));
+      background: linear-gradient(90deg, #ffffff 15%, var(--neon-red));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      text-shadow: 0 0 20px rgba(0, 242, 254, 0.4);
+      text-shadow: 0 0 25px rgba(255, 26, 53, 0.6);
     }
-    .badge {
-      background: rgba(168, 85, 247, 0.18);
-      border: 1px solid rgba(168, 85, 247, 0.5);
-      color: var(--neon-violet);
+    .hud-badge {
+      background: rgba(255, 26, 53, 0.15);
+      border: 1px solid var(--neon-red);
+      color: var(--neon-red);
       font-size: 11px;
       font-weight: 800;
       padding: 4px 10px;
       border-radius: 20px;
       letter-spacing: 1px;
+      box-shadow: 0 0 14px var(--glow-red);
     }
-    .panel {
+
+    /* Core Vehicle Telemetry Panel */
+    .telemetry-panel {
       background: var(--card-bg);
       border: 1px solid var(--card-border);
       border-radius: 22px;
       padding: 16px 18px;
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
-      box-shadow: var(--glow);
+      box-shadow: var(--glass-glow);
     }
-    .v-meta { display: flex; justify-content: space-between; align-items: center; }
-    .v-sub { font-size: 10px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-dim); }
-    .v-title { font-size: 21px; font-weight: 900; color: #fff; margin-top: 2px; }
-    .v-status { display: flex; align-items: center; gap: 6px; margin-top: 4px; font-size: 11px; font-weight: 600; color: var(--neon-emerald); }
-    .pulse { width: 7px; height: 7px; background: var(--neon-emerald); border-radius: 50%; box-shadow: 0 0 10px var(--neon-emerald); }
-    .btn-action {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      color: var(--neon-cyan);
+    .v-header { display: flex; justify-content: space-between; align-items: center; }
+    .v-sub { font-size: 10px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-muted); }
+    .v-name { font-size: 21px; font-weight: 900; color: #fff; margin-top: 2px; }
+    .v-status-row { display: flex; align-items: center; gap: 6px; margin-top: 4px; font-size: 11px; font-weight: 600; color: var(--silver); }
+    .pulse-dot { width: 7px; height: 7px; background: var(--neon-red); border-radius: 50%; box-shadow: 0 0 10px var(--neon-red); animation: pulse 1.6s infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 0.3; transform: scale(0.9); } 50% { opacity: 1; transform: scale(1.2); } }
+
+    .btn-action-red {
+      background: rgba(255, 26, 53, 0.12);
+      border: 1px solid var(--neon-red);
+      color: #fff;
       padding: 8px 14px;
       border-radius: 12px;
       font-size: 12px;
       font-weight: 800;
+      letter-spacing: 0.6px;
       cursor: pointer;
+      box-shadow: 0 0 12px var(--glow-red);
     }
+
+    /* Speedometer & Dials */
     .dials { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-top: 12px; }
-    .dial {
-      background: rgba(0, 0, 0, 0.4);
-      border: 1px solid rgba(255, 255, 255, 0.06);
+    .dial-card {
+      background: rgba(0, 0, 0, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 16px;
       padding: 10px 6px;
       text-align: center;
     }
     .dial-val { font-size: 22px; font-weight: 900; color: #fff; font-feature-settings: "tnum"; }
-    .dial-lbl { font-size: 9px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-dim); margin-top: 2px; font-weight: 700; }
+    .dial-lbl { font-size: 9px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-top: 2px; font-weight: 700; }
+
+    /* Energy Core */
     .energy { margin-top: 12px; }
     .energy-head { display: flex; justify-content: space-between; font-size: 11px; font-weight: 800; text-transform: uppercase; margin-bottom: 6px; }
     .energy-bar { width: 100%; height: 8px; background: rgba(255, 255, 255, 0.08); border-radius: 10px; overflow: hidden; }
     .energy-fill {
       height: 100%;
       width: 88%;
-      background: linear-gradient(90deg, var(--neon-cyan), var(--neon-emerald));
+      background: linear-gradient(90deg, var(--deep-red), var(--neon-red));
       border-radius: 10px;
-      box-shadow: 0 0 12px var(--neon-cyan);
+      box-shadow: 0 0 14px var(--glow-red);
       transition: width 0.4s ease;
     }
-    .config-installer {
-      background: linear-gradient(90deg, rgba(0, 242, 254, 0.08), rgba(168, 85, 247, 0.08));
-      border: 1px dashed rgba(0, 242, 254, 0.4);
+
+    /* Config Installer Badge / Status */
+    .config-box {
+      background: rgba(18, 18, 24, 0.85);
+      border: 1px dashed var(--card-border);
       border-radius: 18px;
       padding: 12px 16px;
       display: flex;
@@ -113,21 +130,45 @@
       justify-content: space-between;
     }
     .cfg-btn {
-      background: linear-gradient(90deg, var(--neon-cyan), var(--neon-violet));
-      color: #000;
+      background: var(--neon-red);
+      color: #fff;
       border: none;
       padding: 8px 14px;
       border-radius: 12px;
       font-size: 11px;
       font-weight: 900;
+      letter-spacing: 0.5px;
       cursor: pointer;
-      box-shadow: 0 0 15px rgba(0, 242, 254, 0.3);
+      box-shadow: 0 0 15px var(--glow-red);
     }
+    .cfg-btn.installed {
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid var(--accent-green);
+      color: var(--accent-green);
+      box-shadow: 0 0 12px rgba(16, 185, 129, 0.3);
+      cursor: default;
+    }
+
+    /* Service Diagnostic Banner */
+    .service-banner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(255, 26, 53, 0.08);
+      border: 1px solid rgba(255, 26, 53, 0.35);
+      border-radius: 16px;
+      padding: 10px 14px;
+      font-size: 11px;
+    }
+    .service-txt { display: flex; align-items: center; gap: 8px; font-weight: 700; color: #fff; }
+    .service-badge { background: var(--neon-red); color: #fff; font-size: 9px; font-weight: 900; padding: 2px 7px; border-radius: 6px; }
+
+    /* Cockpit Driving Modes */
     .modes { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
     .mode-btn {
       background: rgba(255, 255, 255, 0.04);
       border: 1px solid rgba(255, 255, 255, 0.08);
-      color: var(--text-dim);
+      color: var(--silver);
       padding: 9px 2px;
       border-radius: 12px;
       font-size: 11px;
@@ -138,13 +179,15 @@
       transition: all 0.2s;
     }
     .mode-btn.active {
-      background: rgba(168, 85, 247, 0.2);
-      border-color: var(--neon-violet);
+      background: rgba(255, 26, 53, 0.22);
+      border-color: var(--neon-red);
       color: #fff;
-      box-shadow: 0 0 12px rgba(168, 85, 247, 0.3);
+      box-shadow: 0 0 14px var(--glow-red);
     }
+
+    /* Launcher Deck */
     .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
-    .app {
+    .deck-card {
       background: var(--card-bg);
       border: 1px solid rgba(255, 255, 255, 0.07);
       border-radius: 18px;
@@ -154,77 +197,128 @@
       align-items: center;
       justify-content: center;
       text-decoration: none;
-      color: var(--text);
+      color: #fff;
       font-size: 13px;
       font-weight: 800;
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
-      box-shadow: var(--glow);
+      box-shadow: var(--glass-glow);
+      transition: transform 0.1s ease, border-color 0.1s ease;
     }
-    .app:active { transform: scale(0.96); border-color: var(--neon-cyan); background: rgba(0, 242, 254, 0.12); }
-    .app-icon { font-size: 24px; margin-bottom: 4px; }
-    .app-hint { font-size: 9px; color: var(--text-dim); margin-top: 2px; font-weight: 500; }
+    .deck-card:active { transform: scale(0.96); border-color: var(--neon-red); background: rgba(255, 26, 53, 0.15); }
+    .deck-icon { font-size: 24px; margin-bottom: 4px; }
+    .deck-hint { font-size: 9px; color: var(--text-muted); margin-top: 2px; font-weight: 500; }
+
+    /* Vehicle Console Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.9);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 1000;
+    }
+    .modal-box {
+      background: #09090e;
+      border: 1px solid var(--neon-red);
+      width: 100%;
+      max-width: 420px;
+      border-radius: 24px;
+      padding: 22px;
+      box-shadow: 0 0 45px rgba(255, 26, 53, 0.4);
+    }
+    .v-item {
+      padding: 12px 14px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      cursor: pointer;
+    }
+    .v-item.active { border-color: var(--neon-red); color: var(--neon-red); background: rgba(255, 26, 53, 0.1); }
+    .inp { width: 100%; padding: 12px; border-radius: 12px; border: 1px solid #334155; background: #000; color: #fff; margin-top: 8px; font-size: 13px; outline: none; }
   </style>
 </head>
 <body>
 
-  <div class="wrap">
+  <div class="container">
+    <!-- Header -->
     <div class="header">
-      <div class="brand">MYSTHOOD // MATRIX</div>
-      <div class="badge">CYBER-HUD</div>
+      <div class="brand-title">MYSTHOOD // CRIMSON</div>
+      <div class="hud-badge">HUD MATRIX</div>
     </div>
 
-    <!-- Vehicle Telemetry Card -->
-    <div class="panel">
-      <div class="v-meta">
+    <!-- Active Vehicle Profile HUD -->
+    <div class="telemetry-panel">
+      <div class="v-header">
         <div>
-          <div class="v-sub">Connected Machine</div>
-          <div class="v-title" id="vehicleName">Detecting Profile...</div>
-          <div class="v-status"><span class="pulse"></span><span id="telemetryState">CAN-Bus / BLE Synthesized</span></div>
+          <div class="v-sub">Selected Machine</div>
+          <div class="v-name" id="vehicleName">Detecting Profile...</div>
+          <div class="v-status-row"><span class="pulse-dot"></span><span id="telemetryState">CAN-Bus / Hotspot Synthesized</span></div>
         </div>
-        <button class="btn-action" onclick="switchVehicle()">OVERRIDE</button>
+        <button class="btn-action-red" onclick="openVehicleModal()">SELECT CAR</button>
       </div>
 
+      <!-- Dials -->
       <div class="dials">
-        <div class="dial">
+        <div class="dial-card">
           <div class="dial-val" id="liveSpeed">0</div>
-          <div class="dial-lbl">MPH GNSS</div>
+          <div class="dial-lbl">MPH Live</div>
         </div>
-        <div class="dial">
+        <div class="dial-card">
           <div class="dial-val" id="liveGForce">0.05</div>
           <div class="dial-lbl">Lateral G</div>
         </div>
-        <div class="dial">
+        <div class="dial-card">
           <div class="dial-val">71°F</div>
           <div class="dial-lbl">Cabin Sync</div>
         </div>
       </div>
 
+      <!-- Energy / Battery -->
       <div class="energy">
         <div class="energy-head">
-          <span style="color: var(--neon-cyan);" id="energyLabel">⚡ Energy Core</span>
+          <span style="color: var(--neon-red);" id="energyLabel">⚡ Core Pack</span>
           <span id="energyVal" style="color: #fff;">88%</span>
         </div>
         <div class="energy-bar">
           <div class="energy-fill" id="energyFill"></div>
         </div>
-        <div style="display:flex; justify-content:space-between; margin-top:6px; font-size:11px; color:var(--text-dim);">
+        <div style="display:flex; justify-content:space-between; margin-top:6px; font-size:11px; color:var(--text-muted);">
           <span>Range: <b id="estRange" style="color:#fff;">348 mi</b></span>
-          <span>PSI: 41 | 41 | 41 | 41</span>
+          <span id="tirePSI">PSI: 41 | 41 | 41 | 41</span>
         </div>
       </div>
     </div>
 
-    <!-- Direct Apple Profile Installer (Auto-links repository URL) -->
-    <div class="config-installer">
+    <!-- Direct Profile Installer & Link Verification -->
+    <div class="config-box">
       <div>
-        <div style="font-size:12px; font-weight:800; color:#fff;">Apple MobileConfig Setup</div>
-        <div style="font-size:10px; color:var(--text-dim);">Auto-links HUD directly to this domain</div>
+        <div style="font-size:12px; font-weight:800; color:#fff;">Apple MobileConfig</div>
+        <div style="font-size:10px; color:var(--text-muted);" id="cfgSubText">Sync vehicle Wi-Fi & HUD WebClip</div>
       </div>
-      <button class="cfg-btn" onclick="deployMobileConfig()">INSTALL CONFIG</button>
+      <button class="cfg-btn" id="cfgBtn" onclick="handleConfigAction()">INSTALL CONFIG</button>
     </div>
 
-    <!-- Cockpit Driving Modes -->
+    <!-- Diagnostics Alert Banner -->
+    <div class="service-banner">
+      <div class="service-txt">
+        <span>⚠️</span>
+        <span id="serviceMsg">Next System Inspection: 8,400 mi</span>
+      </div>
+      <span class="service-badge" id="serviceCode">OK 00</span>
+    </div>
+
+    <!-- Driving Modes -->
     <div class="modes">
       <button class="mode-btn active" onclick="setMode(this, 0.05)">Street</button>
       <button class="mode-btn" onclick="setMode(this, 0.38)">Sport+</button>
@@ -234,36 +328,61 @@
 
     <!-- App Launcher Deck -->
     <div class="grid">
-      <a href="youtube://" class="app"><span class="app-icon">▶️</span>YouTube<span class="app-hint">Online / Hotspot</span></a>
-      <a href="music://" class="app"><span class="app-icon">🎵</span>Apple Music<span class="app-hint">Offline Stash</span></a>
-      <a href="maps://" class="app"><span class="app-icon">🗺️</span>Apple Maps<span class="app-hint">Offline Vectors</span></a>
-      <a href="comgooglemaps://" class="app"><span class="app-icon">📍</span>Google Maps<span class="app-hint">Live Terrain</span></a>
-      <a href="waze://" class="app"><span class="app-icon">🚗</span>Waze<span class="app-hint">Radar Alerts</span></a>
-      <a href="podcasts://" class="app"><span class="app-icon">🎙️</span>Podcasts<span class="app-hint">Saved Shows</span></a>
-      <a href="shortcuts://run-shortcut?name=Car%20Connect" class="app-card app"><span class="app-icon">⚡</span>Car Sync<span class="app-hint">Re-run Handshake</span></a>
-      <a href="App-Prefs:root=Bluetooth" class="app"><span class="app-icon">📶</span>Bluetooth<span class="app-hint">Radio Pairing</span></a>
+      <a href="youtube://" class="deck-card"><span class="deck-icon">▶️</span>YouTube<span class="deck-hint">Online / Hotspot</span></a>
+      <a href="music://" class="deck-card"><span class="deck-icon">🎵</span>Apple Music<span class="deck-hint">Offline Stash</span></a>
+      <a href="maps://" class="deck-card"><span class="deck-icon">🗺️</span>Apple Maps<span class="deck-hint">Offline Vectors</span></a>
+      <a href="comgooglemaps://" class="deck-card"><span class="deck-icon">📍</span>Google Maps<span class="deck-hint">Satellite Terrain</span></a>
+      <a href="waze://" class="deck-card"><span class="deck-icon">🚗</span>Waze<span class="deck-hint">Police Radar</span></a>
+      <a href="podcasts://" class="deck-card"><span class="deck-icon">🎙️</span>Podcasts<span class="deck-hint">Downloaded Audio</span></a>
+      <a href="shortcuts://run-shortcut?name=Car%20Connect" class="deck-card"><span class="deck-icon">⚡</span>Car Sync<span class="deck-hint">Automate Volume & BT</span></a>
+      <a href="App-Prefs:root=Bluetooth" class="deck-card"><span class="deck-icon">📶</span>Bluetooth<span class="deck-hint">Pair Machine</span></a>
+    </div>
+  </div>
+
+  <!-- Manual Vehicle Console Modal -->
+  <div class="modal" id="vModal">
+    <div class="modal-box">
+      <div style="font-size:16px; font-weight:900; color:#fff; margin-bottom:12px;">SELECT VEHICLE PROFILE</div>
+      <div id="vList" style="max-height:220px; overflow-y:auto;"></div>
+      <input type="text" id="customCarName" class="inp" placeholder="Register custom car (e.g. Corvette Z06, Rivian)...">
+      <button class="btn-action-red" style="width:100%; margin-top:8px;" onclick="addCustomVehicle()">+ Add Vehicle Profile</button>
+      <button class="btn-action-red" style="width:100%; margin-top:6px; background:#1e293b; border-color:#334155;" onclick="closeVehicleModal()">Done</button>
     </div>
   </div>
 
   <script>
-    const CARS = [
-      { name: "Tesla Model S Plaid", battery: 88, range: 348 },
-      { name: "Porsche Taycan Turbo", battery: 74, range: 242 },
-      { name: "Rivian R1T Quad", battery: 62, range: 198 },
-      { name: "Cyberpunk Concept EV", battery: 98, range: 430 }
+    const DEFAULT_VEHICLES = [
+      { name: "Tesla Model S Plaid", battery: 88, range: 348, service: "Normal - Next Checkup in 8,400 mi", code: "OK 00", psi: "41 | 41 | 41 | 41" },
+      { name: "Porsche Taycan Turbo", battery: 74, range: 242, service: "Brake Fluid Flush in 1,200 mi", code: "WARN 04", psi: "38 | 38 | 39 | 39" },
+      { name: "BMW M3 Competition", battery: 95, range: 380, service: "Engine Oil Service in 3,100 mi", code: "OK 00", psi: "35 | 35 | 35 | 35" },
+      { name: "Rivian R1T Quad", battery: 62, range: 198, service: "Tire Rotation Due Immediately", code: "WARN 02", psi: "48 | 48 | 48 | 47" },
+      { name: "Cyberpunk Concept EV", battery: 98, range: 430, service: "Supercapacitor Charge Optimal", code: "OK 00", psi: "36 | 36 | 36 | 36" }
     ];
 
-    let currentIdx = 0;
+    function getVehicles() {
+      const data = localStorage.getItem("myst_vehicles");
+      return data ? JSON.parse(data) : DEFAULT_VEHICLES;
+    }
 
     function init() {
-      const p = new URLSearchParams(window.location.search);
-      const passed = p.get("vehicle");
-      if (passed) {
-        document.getElementById("vehicleName").innerText = decodeURIComponent(passed);
-      } else {
-        document.getElementById("vehicleName").innerText = CARS[0].name;
+      // 1. Detect if launched from the installed configuration profile
+      const params = new URLSearchParams(window.location.search);
+      if (params.get("installed") === "true") {
+        localStorage.setItem("myst_config_installed", "true");
       }
 
+      if (localStorage.getItem("myst_config_installed") === "true") {
+        const btn = document.getElementById("cfgBtn");
+        btn.innerText = "LINKED & VERIFIED ✓";
+        btn.classList.add("installed");
+        document.getElementById("cfgSubText").innerText = "Profile active & managing vehicle Wi-Fi";
+      }
+
+      // 2. Load active vehicle profile
+      const savedCar = localStorage.getItem("myst_active_vehicle") || DEFAULT_VEHICLES[0].name;
+      applyVehicle(savedCar);
+
+      // 3. Start GNSS GPS live speed tracker
       if ("geolocation" in navigator) {
         navigator.geolocation.watchPosition(pos => {
           if (pos.coords.speed && pos.coords.speed >= 0) {
@@ -273,13 +392,56 @@
       }
     }
 
-    function switchVehicle() {
-      currentIdx = (currentIdx + 1) % CARS.length;
-      const c = CARS[currentIdx];
-      document.getElementById("vehicleName").innerText = c.name;
-      document.getElementById("energyVal").innerText = c.battery + "%";
-      document.getElementById("energyFill").style.width = c.battery + "%";
-      document.getElementById("estRange").innerText = c.range + " mi";
+    function applyVehicle(name) {
+      const list = getVehicles();
+      const car = list.find(c => c.name === name) || list[0];
+      localStorage.setItem("myst_active_vehicle", car.name);
+
+      document.getElementById("vehicleName").innerText = car.name;
+      document.getElementById("energyVal").innerText = car.battery + "%";
+      document.getElementById("energyFill").style.width = car.battery + "%";
+      document.getElementById("estRange").innerText = car.range + " mi";
+      document.getElementById("serviceMsg").innerText = car.service;
+      document.getElementById("serviceCode").innerText = car.code;
+      document.getElementById("tirePSI").innerText = "PSI: " + car.psi;
+    }
+
+    function openVehicleModal() {
+      const list = getVehicles();
+      const current = localStorage.getItem("myst_active_vehicle");
+      const container = document.getElementById("vList");
+      container.innerHTML = "";
+
+      list.forEach(c => {
+        const item = document.createElement("div");
+        item.className = `v-item ${c.name === current ? 'active' : ''}`;
+        item.innerHTML = `<span>${c.name}</span><span style="opacity:0.7">${c.battery}%</span>`;
+        item.onclick = () => {
+          applyVehicle(c.name);
+          closeVehicleModal();
+        };
+        container.appendChild(item);
+      });
+
+      document.getElementById("vModal").style.display = "flex";
+    }
+
+    function addCustomVehicle() {
+      const input = document.getElementById("customCarName");
+      const name = input.value.trim();
+      if (!name) return;
+
+      let list = getVehicles();
+      const newCar = { name: name, battery: 92, range: 310, service: "Inspection in 6,000 mi", code: "OK 00", psi: "36 | 36 | 36 | 36" };
+      list.push(newCar);
+      localStorage.setItem("myst_vehicles", JSON.stringify(list));
+      input.value = "";
+      applyVehicle(name);
+      closeVehicleModal();
+    }
+
+    function closeVehicleModal() {
+      document.getElementById("vModal").style.display = "none";
     }
 
     function setMode(btn, g) {
@@ -288,15 +450,22 @@
       document.getElementById("liveGForce").innerText = g;
     }
 
-    // Dynamically generates the configuration profile matching the current live URL
+    function handleConfigAction() {
+      if (localStorage.getItem("myst_config_installed") === "true") {
+        alert("Configuration Profile is already installed and verified on this device.");
+        return;
+      }
+      deployMobileConfig();
+    }
+
     function deployMobileConfig() {
-      const liveURL = window.location.origin + window.location.pathname;
+      const liveURL = window.location.origin + window.location.pathname + "?installed=true";
       const configXML = `<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>PayloadDisplayName</key><string>Mysthood Cyberdeck Matrix Profile</string>
-    <key>PayloadDescription</key><string>Deploys the Mysthood Cyber-HUD kiosk console and vehicle hotspot synchronization.</string>
+    <key>PayloadDisplayName</key><string>Mysthood Crimson Cyberdeck Profile</string>
+    <key>PayloadDescription</key><string>Deploys the Mysthood Crimson Cyber-HUD kiosk console and vehicle hotspot synchronization.</string>
     <key>PayloadIdentifier</key><string>com.mysthood.cyberdeck.profile</string>
     <key>PayloadOrganization</key><string>Mysthood Automotive Dynamics</string>
     <key>PayloadType</key><string>Configuration</string>
@@ -321,7 +490,7 @@
             <key>PayloadVersion</key><integer>1</integer>
             <key>PayloadIdentifier</key><string>com.mysthood.cyberdeck.wifi</string>
             <key>PayloadUUID</key><string>1A689DC2-94C0-466D-BBE4-DC346FE41344</string>
-            <key>PayloadDisplayName</key><string>Mysthood Vehicle Hotspot Link</string>
+            <key>PayloadDisplayName</key><string>Vehicle Hotspot Link</string>
             <key>SSID_STR</key><string>Vehicle-Hotspot</string>
             <key>AutoJoin</key><true/>
             <key>CaptiveBypass</key><true/>
