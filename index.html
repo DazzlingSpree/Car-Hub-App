@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,151 +5,492 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, viewport-fit=cover">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Car Hub">
-  <title>Car Hub PWA v1.0</title>
+  <meta name="apple-mobile-web-app-title" content="Mysthood Hub">
+  <title>Mysthood Cyber Hub // Matrix</title>
   <style>
     :root {
-      --bg: #0b0f19;
-      --card-bg: #141d2e;
-      --card-active: #1e293b;
-      --accent: #38bdf8;
-      --border: #223049;
+      --bg: #030407;
+      --card-bg: rgba(10, 14, 26, 0.72);
+      --card-border: rgba(147, 51, 234, 0.28);
+      --neon-cyan: #00f2fe;
+      --neon-violet: #a855f7;
+      --neon-emerald: #10b981;
+      --neon-amber: #f59e0b;
+      --neon-crimson: #ef4444;
       --text: #f8fafc;
-      --text-muted: #94a3b8;
-      --green: #34d399;
+      --text-dim: #94a3b8;
+      --glass-glow: 0 8px 32px 0 rgba(0, 0, 0, 0.7);
     }
     * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
     body {
       margin: 0;
-      padding: env(safe-area-inset-top, 20px) 18px env(safe-area-inset-bottom, 20px);
-      background: var(--bg);
+      padding: env(safe-area-inset-top, 24px) 16px env(safe-area-inset-bottom, 28px);
+      background: radial-gradient(circle at 50% -10%, #1c0f38 0%, #030407 85%);
       color: var(--text);
-      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
       user-select: none;
+      overflow-x: hidden;
     }
-    .header { width: 100%; max-width: 500px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; padding: 0 4px; }
-    .title { font-size: 19px; font-weight: 800; letter-spacing: 0.8px; color: var(--accent); margin: 0; }
-    .badge { background: #1e293b; color: #94a3b8; font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 20px; border: 1px solid var(--border); }
-    .vehicle-card { width: 100%; max-width: 500px; background: var(--card-bg); border: 1px solid var(--border); border-radius: 20px; padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; box-shadow: 0 8px 24px rgba(0,0,0,0.4); }
-    .v-details { display: flex; flex-direction: column; }
-    .v-label { font-size: 11px; text-transform: uppercase; color: var(--text-muted); font-weight: 700; }
-    .v-name { font-size: 20px; font-weight: 800; color: #fff; margin-top: 3px; }
-    .v-status { font-size: 12px; color: var(--green); display: flex; align-items: center; gap: 6px; margin-top: 5px; }
-    .v-dot { width: 7px; height: 7px; background: var(--green); border-radius: 50%; display: inline-block; }
-    .switch-btn { background: #1e293b; border: 1px solid #334155; color: var(--accent); padding: 9px 15px; border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; }
-    .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; width: 100%; max-width: 500px; flex-grow: 1; }
-    .app-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 20px; padding: 20px 14px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-decoration: none; color: var(--text); font-size: 15px; font-weight: 600; box-shadow: 0 4px 14px rgba(0,0,0,0.3); }
-    .app-card:active { transform: scale(0.96); background: var(--card-active); }
-    .icon { font-size: 34px; margin-bottom: 8px; }
-    .card-hint { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
-    .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.75); backdrop-filter: blur(12px); align-items: center; justify-content: center; padding: 20px; z-index: 200; }
-    .modal-box { background: #131b2e; border: 1px solid var(--border); width: 100%; max-width: 420px; border-radius: 24px; padding: 24px; }
-    .modal-box h3 { margin: 0 0 16px 0; font-size: 19px; color: #fff; }
-    .vehicle-list { display: flex; flex-direction: column; gap: 10px; max-height: 240px; overflow-y: auto; }
-    .v-option { padding: 13px 16px; background: #0b0f19; border: 1px solid var(--border); border-radius: 14px; cursor: pointer; font-weight: 600; display: flex; justify-content: space-between; align-items: center; }
-    .v-option.active { border-color: var(--accent); color: var(--accent); }
-    .add-input { width: 100%; padding: 13px; border-radius: 12px; border: 1px solid #334155; background: #0b0f19; color: #fff; margin-top: 14px; font-size: 14px; outline: none; }
-    .close-btn { width: 100%; margin-top: 14px; padding: 13px; border-radius: 14px; border: none; background: #334155; color: #fff; font-weight: 700; font-size: 15px; cursor: pointer; }
+    .container { width: 100%; max-width: 500px; display: flex; flex-direction: column; gap: 14px; }
+    
+    /* Header */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 4px;
+    }
+    .brand-title {
+      font-size: 21px;
+      font-weight: 900;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      background: linear-gradient(90deg, var(--neon-cyan), var(--neon-violet));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 25px rgba(0, 242, 254, 0.45);
+    }
+    .hud-chip {
+      background: rgba(168, 85, 247, 0.15);
+      border: 1px solid rgba(168, 85, 247, 0.45);
+      color: var(--neon-violet);
+      font-size: 11px;
+      font-weight: 800;
+      padding: 5px 12px;
+      border-radius: 30px;
+      letter-spacing: 1.2px;
+      box-shadow: 0 0 14px rgba(168, 85, 247, 0.25);
+    }
+
+    /* Core Vehicle HUD */
+    .hud-panel {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 22px;
+      padding: 16px 18px;
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      box-shadow: var(--glass-glow);
+    }
+    .v-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .v-sub { font-size: 10px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-dim); }
+    .v-title { font-size: 21px; font-weight: 900; color: #fff; margin-top: 2px; }
+    .status-row { display: flex; align-items: center; gap: 8px; margin-top: 6px; font-size: 11px; font-weight: 600; color: var(--neon-emerald); }
+    .pulse-dot { width: 7px; height: 7px; background: var(--neon-emerald); border-radius: 50%; box-shadow: 0 0 10px var(--neon-emerald); animation: radar 1.8s infinite ease-in-out; }
+    @keyframes radar { 0%, 100% { opacity: 0.3; transform: scale(0.9); } 50% { opacity: 1; transform: scale(1.2); } }
+    
+    .btn-override {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      color: var(--neon-cyan);
+      padding: 8px 14px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.8px;
+      cursor: pointer;
+    }
+
+    /* Speedometer & G-Force Dial */
+    .telemetry-dials {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .dial-card {
+      background: rgba(0, 0, 0, 0.45);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 16px;
+      padding: 12px 8px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .dial-val { font-size: 22px; font-weight: 900; color: #fff; font-feature-settings: "tnum"; }
+    .dial-lbl { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-dim); margin-top: 2px; font-weight: 700; }
+
+    /* Smart Battery / Fuel / Energy Matrix */
+    .energy-bar-wrap { margin-top: 12px; }
+    .energy-header { display: flex; justify-content: space-between; font-size: 11px; font-weight: 800; text-transform: uppercase; margin-bottom: 6px; }
+    .energy-track { width: 100%; height: 9px; background: rgba(255, 255, 255, 0.08); border-radius: 10px; overflow: hidden; }
+    .energy-fill {
+      height: 100%;
+      width: 86%;
+      background: linear-gradient(90deg, var(--neon-cyan), var(--neon-emerald));
+      box-shadow: 0 0 12px var(--neon-cyan);
+      border-radius: 10px;
+      transition: width 0.4s ease;
+    }
+
+    /* Diagnostics & Service Radar */
+    .service-banner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(245, 158, 11, 0.08);
+      border: 1px solid rgba(245, 158, 11, 0.35);
+      border-radius: 16px;
+      padding: 12px 16px;
+      font-size: 12px;
+      box-shadow: 0 0 18px rgba(245, 158, 11, 0.12);
+    }
+    .service-warn { display: flex; align-items: center; gap: 8px; font-weight: 700; color: var(--neon-amber); }
+    .service-badge { background: var(--neon-amber); color: #000; font-size: 10px; font-weight: 900; padding: 2px 7px; border-radius: 8px; }
+
+    /* Dynamic Cockpit Quick Modes */
+    .cockpit-modes {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+    .mode-btn {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: var(--text-dim);
+      padding: 10px 4px;
+      border-radius: 14px;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s ease;
+    }
+    .mode-btn.active {
+      background: rgba(168, 85, 247, 0.18);
+      border-color: var(--neon-violet);
+      color: #fff;
+      box-shadow: 0 0 14px rgba(168, 85, 247, 0.3);
+    }
+
+    /* App Launcher Deck */
+    .app-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+    .deck-card {
+      background: var(--card-bg);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 18px;
+      padding: 15px 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      box-shadow: var(--glass-glow);
+      transition: transform 0.1s ease, border-color 0.1s ease;
+    }
+    .deck-card:active {
+      transform: scale(0.96);
+      border-color: var(--neon-cyan);
+      background: rgba(0, 242, 254, 0.12);
+    }
+    .deck-icon { font-size: 26px; margin-bottom: 5px; filter: drop-shadow(0 0 8px rgba(255,255,255,0.25)); }
+    .deck-hint { font-size: 10px; color: var(--text-dim); margin-top: 2px; font-weight: 500; }
+
+    /* Modal Sheet */
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 1000;
+    }
+    .modal-box {
+      background: #090d18;
+      border: 1px solid var(--neon-violet);
+      width: 100%;
+      max-width: 420px;
+      border-radius: 26px;
+      padding: 22px;
+      box-shadow: 0 0 50px rgba(168, 85, 247, 0.28);
+    }
+    .modal-title { font-size: 16px; font-weight: 900; letter-spacing: 1px; color: #fff; margin-bottom: 14px; }
+    .v-list { display: flex; flex-direction: column; gap: 8px; max-height: 220px; overflow-y: auto; }
+    .v-item {
+      padding: 12px 14px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 12px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .v-item.active { border-color: var(--neon-cyan); color: var(--neon-cyan); }
+    .input-row { width: 100%; padding: 12px; border-radius: 12px; border: 1px solid #334155; background: #000; color: #fff; margin-top: 12px; font-size: 13px; outline: none; }
+    .action-btn { width: 100%; margin-top: 8px; padding: 12px; border-radius: 12px; border: none; font-weight: 800; cursor: pointer; }
+    .btn-add { background: var(--neon-violet); color: #fff; }
+    .btn-close { background: #1e293b; color: #94a3b8; }
   </style>
 </head>
 <body>
-  <div class="header">
-    <h1 class="title">CAR HUB</h1>
-    <span class="badge">OFFLINE READY</span>
-  </div>
 
-  <div class="vehicle-card">
-    <div class="v-details">
-      <span class="v-label">Vehicle Connected</span>
-      <span class="v-name" id="currentVehicleName">Detecting...</span>
-      <span class="v-status"><span class="v-dot"></span><span id="syncState">Auto-Synchronized</span></span>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <div class="brand-title">MYSTHOOD // HUD</div>
+      <div class="hud-chip">CYBER-DECK v1.0</div>
     </div>
-    <button class="switch-btn" onclick="openVehicleModal()">Switch</button>
+
+    <!-- Active Vehicle Profile -->
+    <div class="hud-panel">
+      <div class="v-header">
+        <div>
+          <div class="v-sub">Connected Machine</div>
+          <div class="v-title" id="vehicleName">Detecting Profile...</div>
+          <div class="status-row">
+            <span class="pulse-dot"></span>
+            <span id="telemetryStatus">CAN-Bus / BLE Synthesized</span>
+          </div>
+        </div>
+        <button class="btn-override" onclick="openModal()">OVERRIDE</button>
+      </div>
+
+      <!-- Live Dials (GPS Speed, G-Force, Cabin Temp) -->
+      <div class="telemetry-dials">
+        <div class="dial-card">
+          <span class="dial-val" id="liveSpeed">0</span>
+          <span class="dial-lbl">MPH Live</span>
+        </div>
+        <div class="dial-card">
+          <span class="dial-val" id="liveGForce">0.05</span>
+          <span class="dial-lbl">Lateral G</span>
+        </div>
+        <div class="dial-card">
+          <span class="dial-val" id="liveTemp">71°F</span>
+          <span class="dial-lbl">Cabin Sync</span>
+        </div>
+      </div>
+
+      <!-- Battery / Fuel Core -->
+      <div class="energy-bar-wrap">
+        <div class="energy-header">
+          <span style="color: var(--neon-cyan);" id="energyLabel">⚡ Core Battery</span>
+          <span id="energyVal" style="color: #fff;">86%</span>
+        </div>
+        <div class="energy-track">
+          <div class="energy-fill" id="energyFill"></div>
+        </div>
+        <div style="display:flex; justify-content:space-between; margin-top:6px; font-size:11px; color:var(--text-dim);">
+          <span>Range: <b id="estRange" style="color:#fff;">318 mi</b></span>
+          <span id="tirePressure">PSI: 40 | 40 | 40 | 40</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Service Diagnostic Radar -->
+    <div class="service-banner" id="serviceBanner">
+      <div class="service-warn">
+        <span style="font-size: 16px;">⚠️</span>
+        <span id="serviceMsg">Service Due in 1,200 mi (Brake Fluid Flush)</span>
+      </div>
+      <span class="service-badge" id="serviceCode">WARN 04</span>
+    </div>
+
+    <!-- Dynamic Cockpit Quick Modes -->
+    <div class="cockpit-modes">
+      <button class="mode-btn active" onclick="setMode(this, 'STREET')">Street</button>
+      <button class="mode-btn" onclick="setMode(this, 'SPORT')">Sport+</button>
+      <button class="mode-btn" onclick="setMode(this, 'ECO')">Eco Core</button>
+      <button class="mode-btn" onclick="setMode(this, 'STEALTH')">Stealth</button>
+    </div>
+
+    <!-- Connected Vehicle Launcher Deck -->
+    <div class="app-grid">
+      <a href="youtube://" class="deck-card">
+        <span class="deck-icon">▶️</span>
+        YouTube
+        <span class="deck-hint">Online / Hotspot</span>
+      </a>
+      <a href="music://" class="deck-card">
+        <span class="deck-icon">🎵</span>
+        Apple Music
+        <span class="deck-hint">Offline Stash</span>
+      </a>
+      <a href="maps://" class="deck-card">
+        <span class="deck-icon">🗺️</span>
+        Apple Maps
+        <span class="deck-hint">Offline Vector HUD</span>
+      </a>
+      <a href="comgooglemaps://" class="deck-card">
+        <span class="deck-icon">📍</span>
+        Google Maps
+        <span class="deck-hint">Live Terrain & Traffic</span>
+      </a>
+      <a href="waze://" class="deck-card">
+        <span class="deck-icon">🚗</span>
+        Waze
+        <span class="deck-hint">Police / Radar Alerts</span>
+      </a>
+      <a href="podcasts://" class="deck-card">
+        <span class="deck-icon">🎙️</span>
+        Podcasts
+        <span class="deck-hint">Saved Episodes</span>
+      </a>
+      <a href="shortcuts://run-shortcut?name=Car%20Connect" class="deck-card">
+        <span class="deck-icon">⚡</span>
+        Resync Telemetry
+        <span class="deck-hint">Re-run Handshake</span>
+      </a>
+      <a href="App-Prefs:root=Bluetooth" class="deck-card">
+        <span class="deck-icon">📶</span>
+        Bluetooth Radios
+        <span class="deck-hint">Hardware Pairing</span>
+      </a>
+    </div>
   </div>
 
-  <div class="grid">
-    <a href="youtube://" class="app-card"><span class="icon">▶️</span>YouTube<span class="card-hint">Online / Hotspot</span></a>
-    <a href="music://" class="app-card"><span class="icon">🎵</span>Music<span class="card-hint">Offline Tracks</span></a>
-    <a href="maps://" class="app-card"><span class="icon">🗺️</span>Apple Maps<span class="card-hint">Offline Maps</span></a>
-    <a href="comgooglemaps://" class="app-card"><span class="icon">📍</span>Google Maps<span class="card-hint">Navigation</span></a>
-    <a href="waze://" class="app-card"><span class="icon">🚗</span>Waze<span class="card-hint">Live Alerts</span></a>
-    <a href="podcasts://" class="app-card"><span class="icon">🎙️</span>Podcasts<span class="card-hint">Saved Shows</span></a>
-    <a href="shortcuts://run-shortcut?name=Car%20Connect" class="app-card"><span class="icon">⚡</span>Car Sync<span class="card-hint">Run Automation</span></a>
-    <a href="App-Prefs:root=Bluetooth" class="app-card"><span class="icon">📶</span>Bluetooth<span class="card-hint">Car Settings</span></a>
-  </div>
-
-  <div class="modal" id="vehicleModal">
+  <!-- Manual Vehicle & Service Override Modal -->
+  <div class="modal" id="modal">
     <div class="modal-box">
-      <h3>Select Vehicle Profile</h3>
-      <div class="vehicle-list" id="vehicleList"></div>
-      <input type="text" id="newVehicleInput" class="add-input" placeholder="Add custom vehicle (e.g. BMW M4)...">
-      <button class="switch-btn" style="width:100%;margin-top:10px;padding:12px;" onclick="addNewVehicle()">+ Add Vehicle Profile</button>
-      <button class="close-btn" onclick="closeVehicleModal()">Done</button>
+      <div class="modal-title">REGISTERED MACHINES</div>
+      <div class="v-list" id="vList"></div>
+      <input type="text" id="customCar" class="input-row" placeholder="New Vehicle Name (e.g. Lucid Air, Supra)...">
+      <button class="action-btn btn-add" onclick="addCar()">+ Link Vehicle Profile</button>
+      <button class="action-btn btn-close" onclick="closeModal()">Close Console</button>
     </div>
   </div>
 
   <script>
-    const DEFAULT_VEHICLES = ["Tesla Model 3", "Porsche Taycan", "BMW M3", "Ford F-150", "Universal Vehicle"];
+    const PROFILES = [
+      { name: "Tesla Model S Plaid", battery: 88, range: 348, service: "Normal - Next Inspection 8,400 mi", code: "OK 00", psi: "41 | 41 | 41 | 41" },
+      { name: "Porsche Taycan Turbo", battery: 74, range: 242, service: "Brake Fluid Flush in 1,200 mi", code: "WARN 04", psi: "38 | 38 | 39 | 39" },
+      { name: "Rivian R1T Quad", battery: 62, range: 198, service: "Tire Rotation Due", code: "WARN 02", psi: "48 | 48 | 48 | 47" },
+      { name: "Cyberpunk Concept EV", battery: 98, range: 430, service: "All Systems Pristine", code: "OK 00", psi: "35 | 35 | 35 | 35" }
+    ];
 
-    function getVehicles() {
-      try {
-        const saved = localStorage.getItem("car_hub_vehicles");
-        return saved ? JSON.parse(saved) : DEFAULT_VEHICLES;
-      } catch(e) { return DEFAULT_VEHICLES; }
+    function getCars() {
+      const saved = localStorage.getItem("myst_cars");
+      return saved ? JSON.parse(saved) : PROFILES;
     }
 
-    function saveVehicles(list) { localStorage.setItem("car_hub_vehicles", JSON.stringify(list)); }
+    function saveCars(data) {
+      localStorage.setItem("myst_cars", JSON.stringify(data));
+    }
 
-    function initVehicle() {
-      const urlParams = new URLSearchParams(window.location.search);
-      const passedCar = urlParams.get("vehicle");
-      if (passedCar && passedCar.trim() !== "") {
-        const cleanName = decodeURIComponent(passedCar.trim());
-        localStorage.setItem("car_hub_current_vehicle", cleanName);
-        let list = getVehicles();
-        if (!list.includes(cleanName)) { list.unshift(cleanName); saveVehicles(list); }
+    function setMode(btn, mode) {
+      document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const speed = document.getElementById("liveGForce");
+      if (mode === 'SPORT') speed.innerText = '0.34';
+      else if (mode === 'STEALTH') speed.innerText = '0.01';
+      else speed.innerText = '0.05';
+    }
+
+    function loadProfile() {
+      const params = new URLSearchParams(window.location.search);
+      const passed = params.get("vehicle");
+      let list = getCars();
+
+      let active = list[0];
+      if (passed) {
+        const found = list.find(c => c.name.toLowerCase() === passed.toLowerCase());
+        if (found) {
+          active = found;
+        } else {
+          active = { name: decodeURIComponent(passed), battery: 90, range: 300, service: "Profile Initialized", code: "OK 00", psi: "38 | 38 | 38 | 38" };
+          list.unshift(active);
+          saveCars(list);
+        }
       }
-      const activeCar = localStorage.getItem("car_hub_current_vehicle") || getVehicles()[0];
-      document.getElementById("currentVehicleName").innerText = activeCar;
+
+      document.getElementById("vehicleName").innerText = active.name;
+      document.getElementById("energyVal").innerText = active.battery + "%";
+      document.getElementById("energyFill").style.width = active.battery + "%";
+      document.getElementById("estRange").innerText = active.range + " mi";
+      document.getElementById("serviceMsg").innerText = active.service;
+      document.getElementById("serviceCode").innerText = active.code;
+      document.getElementById("tirePressure").innerText = "PSI: " + active.psi;
+
+      // Color coding battery health
+      const fill = document.getElementById("energyFill");
+      if (active.battery < 20) {
+        fill.style.background = "linear-gradient(90deg, #ef4444, #f59e0b)";
+        fill.style.boxShadow = "0 0 14px #ef4444";
+      } else {
+        fill.style.background = "linear-gradient(90deg, var(--neon-cyan), var(--neon-emerald))";
+        fill.style.boxShadow = "0 0 14px var(--neon-cyan)";
+      }
+
+      // Live GPS Speed Watcher (Zero-Internet Onboard GNSS)
+      if ("geolocation" in navigator) {
+        navigator.geolocation.watchPosition((pos) => {
+          if (pos.coords.speed !== null && pos.coords.speed >= 0) {
+            const mph = Math.round(pos.coords.speed * 2.23694);
+            document.getElementById("liveSpeed").innerText = mph;
+          }
+        }, () => {}, { enableHighAccuracy: true });
+      }
     }
 
-    function openVehicleModal() {
-      const list = getVehicles();
-      const current = localStorage.getItem("car_hub_current_vehicle") || list[0];
-      const container = document.getElementById("vehicleList");
-      container.innerHTML = "";
-      list.forEach(v => {
-        const item = document.createElement("div");
-        item.className = `v-option ${v === current ? 'active' : ''}`;
-        item.innerHTML = `<span>${v}</span>${v === current ? '<span style="color:var(--accent);">✓</span>' : ''}`;
-        item.onclick = () => selectVehicle(v);
-        container.appendChild(item);
+    function openModal() {
+      const list = getCars();
+      const current = document.getElementById("vehicleName").innerText;
+      const wrap = document.getElementById("vList");
+      wrap.innerHTML = "";
+      list.forEach(c => {
+        const row = document.createElement("div");
+        row.className = `v-item ${c.name === current ? 'active' : ''}`;
+        row.innerHTML = `<span>${c.name}</span><span style="opacity:0.6">${c.battery}%</span>`;
+        row.onclick = () => {
+          localStorage.setItem("myst_active", c.name);
+          document.getElementById("vehicleName").innerText = c.name;
+          document.getElementById("energyVal").innerText = c.battery + "%";
+          document.getElementById("energyFill").style.width = c.battery + "%";
+          document.getElementById("estRange").innerText = c.range + " mi";
+          document.getElementById("serviceMsg").innerText = c.service;
+          document.getElementById("serviceCode").innerText = c.code;
+          document.getElementById("tirePressure").innerText = "PSI: " + c.psi;
+          closeModal();
+        };
+        wrap.appendChild(row);
       });
-      document.getElementById("vehicleModal").style.display = "flex";
+      document.getElementById("modal").style.display = "flex";
     }
 
-    function selectVehicle(name) {
-      localStorage.setItem("car_hub_current_vehicle", name);
-      document.getElementById("currentVehicleName").innerText = name;
-      closeVehicleModal();
+    function addCar() {
+      const val = document.getElementById("customCar").value.trim();
+      if (!val) return;
+      let list = getCars();
+      const item = { name: val, battery: 92, range: 310, service: "Checkup in 5,000 mi", code: "OK 00", psi: "36 | 36 | 36 | 36" };
+      list.push(item);
+      saveCars(list);
+      document.getElementById("customCar").value = "";
+      document.getElementById("vehicleName").innerText = val;
+      closeModal();
     }
 
-    function addNewVehicle() {
-      const input = document.getElementById("newVehicleInput");
-      const name = input.value.trim();
-      if (!name) return;
-      let list = getVehicles();
-      if (!list.includes(name)) { list.push(name); saveVehicles(list); }
-      input.value = "";
-      selectVehicle(name);
+    function closeModal() {
+      document.getElementById("modal").style.display = "none";
     }
 
-    function closeVehicleModal() { document.getElementById("vehicleModal").style.display = "none"; }
-    window.onload = initVehicle;
+    window.onload = loadProfile;
   </script>
 </body>
 </html>
