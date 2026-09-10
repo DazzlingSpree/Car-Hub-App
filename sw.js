@@ -1,4 +1,4 @@
-const CACHE_NAME = 'mysthood-hud-v2.0';
+const CACHE_NAME = 'mysthood-hud-v2.5';
 const ASSETS = [
   './',
   './index.html',
