@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
     <key>PayloadDisplayName</key>
-    <string>Mysthood Cyberdeck Matrix Profile</string>
+    <string>Mysthood Crimson Cyberdeck Profile</string>
     <key>PayloadDescription</key>
-    <string>Deploys the Mysthood Cyber-HUD kiosk console and manages vehicle hotspot synchronization.</string>
+    <string>Deploys the Mysthood Crimson Cyber-HUD kiosk console and vehicle hotspot synchronization.</string>
     <key>PayloadIdentifier</key>
     <string>com.mysthood.cyberdeck.profile</string>
     <key>PayloadOrganization</key>
@@ -20,7 +20,7 @@
     <integer>1</integer>
     <key>PayloadContent</key>
     <array>
-        <!-- Standalone Mysthood HUD Launcher with Custom App Icon -->
+        <!-- Standalone Mysthood HUD Launcher with Crimson App Icon -->
         <dict>
             <key>PayloadType</key>
             <string>com.apple.webClip.managed</string>
@@ -38,44 +38,32 @@
             <string>Mysthood Automotive Dynamics</string>
             <key>Label</key>
             <string>Mysthood HUD</string>
+            <!-- Carries ?installed=true flag so app detects profile activation -->
             <key>URL</key>
-            <string>https://rextex999.github.io/car-hub/</string>
+            <string>https://rextex999.github.io/car-hub/?installed=true</string>
             <key>FullScreen</key>
             <true/>
             <key>IsRemovable</key>
             <true/>
             <key>Precomposed</key>
             <true/>
-            <!-- Embedded Neon Obsidian HUD App Icon (180x180 PNG Base64) -->
             <key>Icon</key>
             <data>
             iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAYAAAA9zQYyAAAACXBIWXMAAAsTAAALEwEAmpwY
-            AAAAB3RJTUUH6AkKDzAX0v3z2gAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJ
-            TVBkLmUHAAAFcElEQVR42u3cTYhbVRzH8c+b5M1kZpq0mXbaqU2hWlt8wI24KkWKiiCiVvBl
-            q9246EZxV1wI4sKFuHPhVly48aVQEHQtuCtKUXwVK1ap2iItrbSdpNNpkpnkPXEZV532pS95
-            n/f/gw8G8iCEn/nfe+/NTS4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-            AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACADUq89j95163l
-            fW+eb919a7kY99p33VrebF33m6+3Dk9Vb4wBAHg8e8+t5123lutxf2HqWPPuO49/vd88/u7F
-            W7e/8cbh2+9Z3z1s15c3272j9frNdw9feftU9cYrV48/ePvJcQAAnvje/ffwXLe+vNnqv3s5
-            3547fvjK8eNHj5w/3O3uv3q5/363t19fe/9C/73j57p3PXBpvf/uhf77J9b71z85f/D2967t
-            11dvvXp4649Pjo4DAMAX9u3P3vH07t0nDve7B8b12w+v967vrA46u93e4eOr7717/sqD545d
-            fP/9w/dfv3D17uOPXj565NjhY8f2r447g6OHr+0f3D541737h9sHn/z09/EAAAAf2d7zG/nO
-            sUf2D7/49M7hyw+/v//iyd0r75w7sD3qv707PnJq/8q5y4O3Dx89dOnw4eXl/f12e8/Fq194
-            eX/v6p57bvv06P9/AgAAAPyPffszR5955tF7jh3e6e768NrtN14/fXp399jV/XfevnP8yNHD
-            y3fv9s+e3z817h7d2bv80t27dx9+fv+5jzw4AAAAP5c/fvrjZ/feeffhy4eOD/b2z507uPzC
-            c58+fO3o8t3vXj589Oj5w/tP7F7q73v54uVbH//h41d/OAAAAHxCv3Lg2QOHbzx98fj46j/X
-            rh4e7B6+9+D3V68dfurhS5ff+OD87qWjh/aevP/o4w8OAAAA8HH9yuPvvvvq0e9e+e3S488/
-            ceH15y/u7R7afvv41fuvvXDq7uOPDwAAwEfz/OcfOnD40v69Z545duWV586/d3j3sUfvHQAA
-            AI7sF58/euD4wXvOXb7j5O7l448OAAAA8HH90uMnDhw/tP/Y/fcf+ejvAAAAAAB8eX5x/6F/
-            AgAAAD8935k/PAAAAEbnhwAAAAD48fjhAwAAAPhx+QAAAAAA/Fj8EAAAAACH/BMAAAAAf+q9
-            /569/9Tz/wQAAAB+ev7oBwAAAID/Nz8EAAAA/Fj8EAAAAACH/BMAAAAA/2P8EAAAAAD/C374
-            AAAAAH5cPgAAAAAAgB+NDwAAAADwY/NDAAAAADjmAwAAAAD+jPkAAAAAAPxY/BAAAAAAh/wT
-            AAAAAH/qvf+evf/U8/8EAAAAfnr+6AcAAACA/zc/BAAAAPxY/BAAAAAAh/wTAAAAAP9j/BAA
-            AAAA/wt++AAAAAB+XD4AAAAAAIAfjQ8AAAAA8GPzQwAAAAA45gMAAAAA/oz5AAAAAAD8WPwQ
-            AAAAAIf8EwAAAAB/6r3/nr3/1PP/BAAAAH56/ugHAAAAgP83PwQAAAD8WPwQAAAAAIf8EwAA
-            AAD/Y/wQAAAAAP8LfvgaAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-            AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACADew/44eFfgd9
-            O4UAAAAASUVORK5CYII=
+            AAAAB3RJTUUH6AkMDhI388hH5wAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJ
+            TVBkLmUHAAADxUlEQVR42u3YQWsTURjG8ecmTZo2bVpqq62ttmKlIiiIFyo++1l894N4FRFB
+            QUQRxIuKgoqg4MGD4MGD4EG8CIKX3oo3P4EXB7F2pZ3SpE1mkpmjO6p7s8lM0sz/e56FvSSQ
+            vMz7PO/kTYIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+            AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA4H9jcfF7s7r6vXn27OP/8/l8
+            M1nMN5PB8H0zHO40d3a2mxsbr357e+/+p1s3PzT9wdtma/u1b6zF/4d0Nttsbmy8+fX164cf
+            X794/Hn5weO3Dx7svdrYeP376ur3ZrX5tZlMJpvpdLqZ/55M/5gA4E/b3Hw/399/t7G793Gj
+            f7DVbHW6m51ud7Pbu7PZ613d3N5+szHYf7+x//mzz76v/gB/1OHhfLPff7uxs/Nxo7e71Wy2
+            25ud7tVmp7vZ6V1t9nb3Njdfv97Yv/2l2dt7f/7m/1MA8H+yt/dlc39/p7m787HZvXqt2ep2
+            Nzvdm812e6vZ7m01d3c+bL5988XqD4Af9+XLznzr18eN3e8fNzrXupv94fZmo3Wj2Wjfau7u
+            vG+2t199fvXqo9Uf4E/b3/+/2t8f/63tdnuz073W7HQvN7u9/WZ/+L65/Xmzv7//4fsr/8AA
+            AAAAAPiR7O192dx9v9fs/XzX3L16rdnZXG0Oh++b/f7e5vb29oeffv3xPwAAAAB8v+3t17+3
+            tn80tzpd/wcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+            AAAAAAAAAAAAAAAAAAAAAAAAAAAAMEf+AG/a4Z5k3x77AAAAAElFTkSuQmCC
             </data>
         </dict>
         <!-- Vehicle Hotspot Link -->
@@ -90,12 +78,8 @@
             <string>1A689DC2-94C0-466D-BBE4-DC346FE41344</string>
             <key>PayloadDisplayName</key>
             <string>Mysthood Vehicle Hotspot Link</string>
-            <key>PayloadOrganization</key>
-            <string>Mysthood Automotive Dynamics</string>
             <key>SSID_STR</key>
             <string>Vehicle-Hotspot</string>
-            <key>HIDDEN_NETWORK</key>
-            <false/>
             <key>AutoJoin</key>
             <true/>
             <key>CaptiveBypass</key>
