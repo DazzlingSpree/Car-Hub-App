@@ -1,44 +1,43 @@
-
-
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
     <key>PayloadDisplayName</key>
-    <string>Car Entertainment Hub Profile v1.0</string>
+    <string>Mysthood Cyberdeck Matrix Profile</string>
     <key>PayloadDescription</key>
-    <string>Configures automated vehicle Wi-Fi/Hotspot network join rules and installs the standalone full-screen Car Entertainment Hub dashboard.</string>
+    <string>Deploys the Mysthood Cyber-HUD kiosk console and manages vehicle hotspot synchronization.</string>
     <key>PayloadIdentifier</key>
-    <string>com.carhub.entertainment.profile.v1</string>
+    <string>com.mysthood.cyberdeck.profile</string>
     <key>PayloadOrganization</key>
-    <string>Hub Automotive</string>
+    <string>Mysthood Automotive Dynamics</string>
     <key>PayloadRemovalDisallowed</key>
     <false/>
     <key>PayloadType</key>
     <string>Configuration</string>
     <key>PayloadUUID</key>
-    <string>A58E717D-3D9B-4D14-99FE-DC14D661F870</string>
+    <string>D9A2F841-B831-4FE2-8411-2E90D483CB81</string>
     <key>PayloadVersion</key>
     <integer>1</integer>
     <key>PayloadContent</key>
     <array>
+        <!-- Standalone Mysthood HUD Launcher -->
         <dict>
             <key>PayloadType</key>
             <string>com.apple.webClip.managed</string>
             <key>PayloadVersion</key>
             <integer>1</integer>
             <key>PayloadIdentifier</key>
-            <string>com.carhub.entertainment.webclip</string>
+            <string>com.mysthood.cyberdeck.webclip</string>
             <key>PayloadUUID</key>
-            <string>63C417A2-1403-4D90-99E8-3C21E5343B88</string>
+            <string>7B910A54-3221-4CAE-A79B-F1492DF88188</string>
             <key>PayloadDisplayName</key>
-            <string>Car Hub</string>
+            <string>Mysthood HUD</string>
             <key>PayloadDescription</key>
-            <string>Installs the Car Hub fullscreen HUD on the iOS home screen.</string>
+            <string>Installs the standalone Mysthood Cyberdeck Kiosk on your iOS home screen.</string>
             <key>PayloadOrganization</key>
-            <string>Hub Automotive</string>
+            <string>Mysthood Automotive Dynamics</string>
             <key>Label</key>
-            <string>Car Hub</string>
+            <string>Mysthood HUD</string>
             <key>URL</key>
             <string>https://rextex999.github.io/car-hub/</string>
             <key>FullScreen</key>
@@ -48,21 +47,22 @@
             <key>Precomposed</key>
             <true/>
         </dict>
+        <!-- Vehicle Hotspot & In-Cabin Wi-Fi Auto-Link -->
         <dict>
             <key>PayloadType</key>
             <string>com.apple.wifi.managed</string>
             <key>PayloadVersion</key>
             <integer>1</integer>
             <key>PayloadIdentifier</key>
-            <string>com.carhub.entertainment.wifi</string>
+            <string>com.mysthood.cyberdeck.wifi</string>
             <key>PayloadUUID</key>
-            <string>3A422D30-80E2-441F-8761-12503289E78C</string>
+            <string>1A689DC2-94C0-466D-BBE4-DC346FE41344</string>
             <key>PayloadDisplayName</key>
-            <string>Vehicle Wi-Fi / Hotspot Auto-Connect</string>
+            <string>Mysthood Vehicle Hotspot Link</string>
             <key>PayloadDescription</key>
-            <string>Enables auto-joining of vehicle Wi-Fi networks and hotspot pass-through.</string>
+            <string>Automates secure in-vehicle Wi-Fi network joining and captive portal bypass.</string>
             <key>PayloadOrganization</key>
-            <string>Hub Automotive</string>
+            <string>Mysthood Automotive Dynamics</string>
             <key>SSID_STR</key>
             <string>Vehicle-Hotspot</string>
             <key>HIDDEN_NETWORK</key>
