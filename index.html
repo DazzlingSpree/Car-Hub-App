@@ -7,7 +7,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Mysthood HUD">
   
-  <!-- Dynamic Raster PNG Apple Touch Icon Placeholder -->
+  <!-- Dynamic Raster PNG Apple Touch Icon Placeholder (Eliminates White Borders) -->
   <link id="dynamicAppleIcon" rel="apple-touch-icon" href="">
   <link rel="icon" type="image/png" id="dynamicFavicon" href="">
 
@@ -353,57 +353,63 @@
   </div>
 
   <script>
-    // 1. GENERATE RASTER PNG ICON ON-THE-FLY (Fixes iOS SVG Ignored Bug)
+    // 1. GENERATE FULL-BLEED ZOOMED RASTER PNG (ELIMINATES WHITE EDGES ON IOS)
     let generatedPNGDataURL = "";
     function generateRasterAppleIcon() {
       const canvas = document.createElement("canvas");
-      canvas.width = 180;
-      canvas.height = 180;
+      canvas.width = 512;
+      canvas.height = 512;
       const ctx = canvas.getContext("2d");
 
-      // Dark Obsidian Canvas Background with Rounded Profile
-      ctx.fillStyle = "#040407";
-      ctx.fillRect(0, 0, 180, 180);
+      // Full edge-to-edge solid background bleed
+      ctx.fillStyle = "#030407";
+      ctx.fillRect(0, 0, 512, 512);
 
-      // Crimson Gradient Background Ring
-      const grad = ctx.createRadialGradient(90, 40, 10, 90, 90, 120);
-      grad.addColorStop(0, "#42000a");
-      grad.addColorStop(1, "#040407");
+      // Deep radial glow centered behind the emblem
+      const grad = ctx.createRadialGradient(256, 160, 20, 256, 256, 320);
+      grad.addColorStop(0, "#4a000a");
+      grad.addColorStop(0.7, "#120003");
+      grad.addColorStop(1, "#030407");
       ctx.fillStyle = grad;
-      ctx.fillRect(0, 0, 180, 180);
+      ctx.fillRect(0, 0, 512, 512);
 
-      // Red Outer Shield Glow
+      // Outer crimson accent ring
       ctx.strokeStyle = "#ff1a35";
-      ctx.lineWidth = 4;
-      ctx.strokeRect(6, 6, 168, 168);
+      ctx.lineWidth = 14;
+      ctx.strokeRect(16, 16, 480, 480);
 
-      // Mysthood Crimson Emblem (Apex & Wings)
+      // Inner boundary line
+      ctx.strokeStyle = "rgba(255, 255, 255, 0.12)";
+      ctx.lineWidth = 4;
+      ctx.strokeRect(32, 32, 448, 448);
+
+      // Zoomed-in Apex Emblem (Scaled by ~1.3x)
       ctx.fillStyle = "#ff1a35";
       ctx.beginPath();
-      ctx.moveTo(90, 30);
-      ctx.lineTo(135, 105);
-      ctx.lineTo(110, 105);
-      ctx.lineTo(90, 72);
-      ctx.lineTo(70, 105);
-      ctx.lineTo(45, 105);
+      ctx.moveTo(256, 75);
+      ctx.lineTo(395, 285);
+      ctx.lineTo(325, 285);
+      ctx.lineTo(256, 185);
+      ctx.lineTo(187, 285);
+      ctx.lineTo(117, 285);
       ctx.closePath();
       ctx.fill();
 
-      // Lower Wings
+      // Zoomed-in Lower Wings
       ctx.beginPath();
-      ctx.moveTo(90, 145);
-      ctx.lineTo(60, 115);
-      ctx.lineTo(75, 115);
-      ctx.lineTo(90, 130);
-      ctx.lineTo(105, 115);
-      ctx.lineTo(120, 115);
+      ctx.moveTo(256, 405);
+      ctx.lineTo(165, 305);
+      ctx.lineTo(215, 305);
+      ctx.lineTo(256, 355);
+      ctx.lineTo(297, 305);
+      ctx.lineTo(347, 305);
       ctx.closePath();
       ctx.fill();
 
-      // Central White Core Dot
+      // Bright white central focal core
       ctx.fillStyle = "#ffffff";
       ctx.beginPath();
-      ctx.arc(90, 90, 6, 0, Math.PI * 2);
+      ctx.arc(256, 256, 16, 0, Math.PI * 2);
       ctx.fill();
 
       generatedPNGDataURL = canvas.toDataURL("image/png");
