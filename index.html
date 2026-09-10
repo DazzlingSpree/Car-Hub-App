@@ -7,7 +7,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Mysthood HUD">
   
-  <!-- Dynamic Raster PNG Apple Touch Icon Placeholder (Eliminates White Borders) -->
+  <!-- Dynamic Raster PNG Apple Touch Icon Placeholder (Full Bleed Square - No White Borders) -->
   <link id="dynamicAppleIcon" rel="apple-touch-icon" href="">
   <link rel="icon" type="image/png" id="dynamicFavicon" href="">
 
@@ -353,7 +353,7 @@
   </div>
 
   <script>
-    // 1. GENERATE FULL-BLEED ZOOMED RASTER PNG (ELIMINATES WHITE EDGES ON IOS)
+    // GENERATE FULL-BLEED FLAT SQUARE RASTER PNG (REMOVES WHITE EDGES ENTIRELY)
     let generatedPNGDataURL = "";
     function generateRasterAppleIcon() {
       const canvas = document.createElement("canvas");
@@ -361,56 +361,82 @@
       canvas.height = 512;
       const ctx = canvas.getContext("2d");
 
-      // Full edge-to-edge solid background bleed
-      ctx.fillStyle = "#030407";
+      // 1. Full-Bleed Solid Flat Background (No rounded corners here, iOS applies squircle automatically)
+      const bgGrad = ctx.createRadialGradient(256, 256, 10, 256, 256, 360);
+      bgGrad.addColorStop(0, "#140205");
+      bgGrad.addColorStop(0.6, "#07070a");
+      bgGrad.addColorStop(1, "#020204");
+      ctx.fillStyle = bgGrad;
       ctx.fillRect(0, 0, 512, 512);
 
-      // Deep radial glow centered behind the emblem
-      const grad = ctx.createRadialGradient(256, 160, 20, 256, 256, 320);
-      grad.addColorStop(0, "#4a000a");
-      grad.addColorStop(0.7, "#120003");
-      grad.addColorStop(1, "#030407");
-      ctx.fillStyle = grad;
-      ctx.fillRect(0, 0, 512, 512);
+      // 2. Ambient Radar Concentric Ring
+      ctx.strokeStyle = "rgba(255, 18, 54, 0.16)";
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.arc(256, 256, 170, 0, Math.PI * 2);
+      ctx.stroke();
 
-      // Outer crimson accent ring
-      ctx.strokeStyle = "#ff1a35";
-      ctx.lineWidth = 14;
-      ctx.strokeRect(16, 16, 480, 480);
+      // 3. Glowing Center Reticle Ring
+      ctx.save();
+      ctx.shadowColor = "#ff1a38";
+      ctx.shadowBlur = 18;
+      ctx.strokeStyle = "#ff1a38";
+      ctx.lineWidth = 5;
+      ctx.setLineDash([145, 32, 45, 32]);
+      ctx.beginPath();
+      ctx.arc(256, 256, 126, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.restore();
 
-      // Inner boundary line
-      ctx.strokeStyle = "rgba(255, 255, 255, 0.12)";
+      // 4. White Tactical Crosshairs
+      ctx.strokeStyle = "#ffffff";
       ctx.lineWidth = 4;
-      ctx.strokeRect(32, 32, 448, 448);
+      ctx.lineCap = "round";
+      ctx.beginPath(); ctx.moveTo(95, 256); ctx.lineTo(135, 256); ctx.stroke(); // Left
+      ctx.beginPath(); ctx.moveTo(377, 256); ctx.lineTo(417, 256); ctx.stroke(); // Right
+      ctx.beginPath(); ctx.moveTo(256, 95); ctx.lineTo(256, 125); ctx.stroke(); // Top
+      ctx.beginPath(); ctx.moveTo(256, 387); ctx.lineTo(256, 417); ctx.stroke(); // Bottom
 
-      // Zoomed-in Apex Emblem (Scaled by ~1.3x)
-      ctx.fillStyle = "#ff1a35";
+      // 5. Main Red Apex Chevron
+      ctx.save();
+      ctx.shadowColor = "#ff1236";
+      ctx.shadowBlur = 24;
+      const redGrad = ctx.createLinearGradient(256, 88, 256, 424);
+      redGrad.addColorStop(0, "#ff2e4d");
+      redGrad.addColorStop(0.5, "#ff1236");
+      redGrad.addColorStop(1, "#a80017");
+      ctx.fillStyle = redGrad;
+
+      // Top Apex Chevron
       ctx.beginPath();
-      ctx.moveTo(256, 75);
-      ctx.lineTo(395, 285);
-      ctx.lineTo(325, 285);
-      ctx.lineTo(256, 185);
-      ctx.lineTo(187, 285);
-      ctx.lineTo(117, 285);
+      ctx.moveTo(256, 88);
+      ctx.lineTo(374, 290);
+      ctx.lineTo(304, 290);
+      ctx.lineTo(256, 204);
+      ctx.lineTo(208, 290);
+      ctx.lineTo(138, 290);
       ctx.closePath();
       ctx.fill();
 
-      // Zoomed-in Lower Wings
+      // Lower Inverted Wing Chevron
       ctx.beginPath();
-      ctx.moveTo(256, 405);
-      ctx.lineTo(165, 305);
-      ctx.lineTo(215, 305);
-      ctx.lineTo(256, 355);
-      ctx.lineTo(297, 305);
-      ctx.lineTo(347, 305);
+      ctx.moveTo(256, 424);
+      ctx.lineTo(174, 316);
+      ctx.lineTo(236, 316);
+      ctx.lineTo(256, 348);
+      ctx.lineTo(276, 316);
+      ctx.lineTo(338, 316);
       ctx.closePath();
       ctx.fill();
 
-      // Bright white central focal core
+      // 6. Glowing White Center Sensor
       ctx.fillStyle = "#ffffff";
+      ctx.shadowColor = "#ffffff";
+      ctx.shadowBlur = 15;
       ctx.beginPath();
-      ctx.arc(256, 256, 16, 0, Math.PI * 2);
+      ctx.arc(256, 256, 17, 0, Math.PI * 2);
       ctx.fill();
+      ctx.restore();
 
       generatedPNGDataURL = canvas.toDataURL("image/png");
       document.getElementById("dynamicAppleIcon").href = generatedPNGDataURL;
@@ -523,7 +549,7 @@
       deployMobileConfig();
     }
 
-    // Embeds the generated raster PNG base64 straight into the .mobileconfig payload
+    // Embeds the generated flat raster PNG base64 straight into the .mobileconfig payload
     function deployMobileConfig() {
       const baseURL = window.location.origin + window.location.pathname.replace(/\/[^\/]*$/, '/');
       const liveLaunchURL = baseURL + "?installed=true";
