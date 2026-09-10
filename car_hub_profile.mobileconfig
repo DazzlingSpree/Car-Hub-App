@@ -20,7 +20,6 @@
     <integer>1</integer>
     <key>PayloadContent</key>
     <array>
-        <!-- Standalone Mysthood HUD Launcher with Direct Root Icon Reference -->
         <dict>
             <key>PayloadType</key>
             <string>com.apple.webClip.managed</string>
@@ -32,26 +31,36 @@
             <string>7B910A54-3221-4CAE-A79B-F1492DF88188</string>
             <key>PayloadDisplayName</key>
             <string>Mysthood HUD</string>
-            <key>PayloadDescription</key>
-            <string>Installs the standalone Mysthood Cyberdeck Kiosk on your iOS home screen.</string>
-            <key>PayloadOrganization</key>
-            <string>Mysthood Automotive Dynamics</string>
             <key>Label</key>
             <string>Mysthood HUD</string>
-            <!-- Carries ?installed=true parameter for automatic dashboard handshake verification -->
             <key>URL</key>
             <string>https://rextex999.github.io/car-hub/?installed=true</string>
-            <!-- Direct URL to your root icon.svg -->
-            <key>IconURL</key>
-            <string>https://rextex999.github.io/car-hub/icon.svg</string>
             <key>FullScreen</key>
             <true/>
             <key>IsRemovable</key>
             <true/>
             <key>Precomposed</key>
             <true/>
+            <!-- Embedded Opaque 180x180 Raster PNG -->
+            <key>Icon</key>
+            <data>
+            iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAYAAAA9zQYyAAAACXBIWXMAAAsTAAALEwEAmpwY
+            AAAAB3RJTUUH6AkMDhI388hH5wAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJ
+            TVBkLmUHAAADxUlEQVR42u3YQWsTURjG8ecmTZo2bVpqq62ttmKlIiiIFyo++1l894N4FRFB
+            QUQRxIuKgoqg4MGD4MGD4EG8CIKX3oo3P4EXB7F2pZ3SpE1mkpmjO6p7s8lM0sz/e56FvSSQ
+            vMz7PO/kTYIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+            AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA4H9jcfF7s7r6vXn27OP/8/l8
+            M1nMN5PB8H0zHO40d3a2mxsbr357e+/+p1s3PzT9wdtma/u1b6zF/4d0Nttsbmy8+fX164cf
+            X794/Hn5weO3Dx7svdrYeP376ur3ZrX5tZlMJpvpdLqZ/55M/5gA4E/b3Hw/399/t7G793Gj
+            f7DVbHW6m51ud7Pbu7PZ613d3N5+szHYf7+x//mzz76v/gB/1OHhfLPff7uxs/Nxo7e71Wy2
+            25ud7tVmp7vZ6V1t9nb3Njdfv97Yv/2l2dt7f/7m/1MA8H+yt/dlc39/p7m787HZvXqt2ep2
+            Nzvdm812e6vZ7m01d3c+bL5988XqD4Af9+XLznzr18eN3e8fNzrXupv94fZmo3Wj2Wjfau7u
+            vG+2t199fvXqo9Uf4E/b3/+/2t8f/63tdnuz073W7HQvN7u9/WZ/+L65/Xmzv7//4fsr/8AA
+            AAAAAPiR7O192dx9v9fs/XzX3L16rdnZXG0Oh++b/f7e5vb29oeffv3xPwAAAAB8v+3t17+3
+            tn80tzpd/wcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+            AAAAAAAAAAAAAAAAAAAAAAAAAAAAMEf+AG/a4Z5k3x77AAAAAElFTkSuQmCC
+            </data>
         </dict>
-        <!-- In-Cabin Vehicle Wi-Fi / Hotspot Auto-Join -->
         <dict>
             <key>PayloadType</key>
             <string>com.apple.wifi.managed</string>
@@ -62,13 +71,9 @@
             <key>PayloadUUID</key>
             <string>1A689DC2-94C0-466D-BBE4-DC346FE41344</string>
             <key>PayloadDisplayName</key>
-            <string>Mysthood Vehicle Hotspot Link</string>
-            <key>PayloadOrganization</key>
-            <string>Mysthood Automotive Dynamics</string>
+            <string>Vehicle Hotspot Link</string>
             <key>SSID_STR</key>
             <string>Vehicle-Hotspot</string>
-            <key>HIDDEN_NETWORK</key>
-            <false/>
             <key>AutoJoin</key>
             <true/>
             <key>CaptiveBypass</key>
