@@ -6,16 +6,14 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Mysthood HUD">
-  
   <link rel="manifest" href="manifest.json">
   <link id="dynamicAppleIcon" rel="apple-touch-icon" href="">
   <link rel="icon" type="image/png" id="dynamicFavicon" href="">
-
-  <title>Mysthood Universal Diagnostic Core // Matrix</title>
+  <title>Mysthood Real Hardware HUD</title>
   <style>
     :root {
       --bg: #030407;
-      --card-bg: rgba(12, 12, 16, 0.88);
+      --card-bg: rgba(12, 12, 16, 0.90);
       --card-border: rgba(255, 26, 53, 0.35);
       --neon-red: #ff1a35;
       --deep-red: #990014;
@@ -24,7 +22,6 @@
       --text-muted: #94a3b8;
       --silver: #cbd5e1;
       --accent-green: #10b981;
-      --accent-amber: #f59e0b;
       --accent-cyan: #00f2fe;
       --glass-glow: 0 8px 32px 0 rgba(0, 0, 0, 0.85);
     }
@@ -43,8 +40,6 @@
       overflow-x: hidden;
     }
     .container { width: 100%; max-width: 520px; display: flex; flex-direction: column; gap: 12px; }
-
-    /* Biometric Lock */
     .biometric-screen {
       position: fixed;
       inset: 0;
@@ -57,8 +52,8 @@
       z-index: 9999;
       text-align: center;
     }
-    .bio-icon { font-size: 64px; margin-bottom: 16px; filter: drop-shadow(0 0 20px var(--neon-red)); animation: pulse 2s infinite; }
-    .bio-title { font-size: 22px; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; }
+    .bio-icon { font-size: 64px; margin-bottom: 16px; filter: drop-shadow(0 0 20px var(--neon-red)); }
+    .bio-title { font-size: 22px; font-weight: 900; letter-spacing: 2px; }
     .bio-desc { font-size: 13px; color: var(--text-muted); margin: 8px 0 24px 0; max-width: 320px; }
     .btn-unlock {
       background: var(--neon-red);
@@ -72,18 +67,14 @@
       cursor: pointer;
       box-shadow: 0 0 20px var(--glow-red);
     }
-
-    /* Header */
     .header { display: flex; justify-content: space-between; align-items: center; padding: 0 4px; }
     .brand-title {
       font-size: 21px;
       font-weight: 900;
-      letter-spacing: 2.2px;
-      text-transform: uppercase;
+      letter-spacing: 2px;
       background: linear-gradient(90deg, #ffffff 15%, var(--neon-red));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      text-shadow: 0 0 25px rgba(255, 26, 53, 0.6);
     }
     .hud-badge {
       background: rgba(255, 26, 53, 0.15);
@@ -95,8 +86,6 @@
       border-radius: 20px;
       letter-spacing: 1px;
     }
-
-    /* Telemetry HUD Panel */
     .telemetry-panel {
       background: var(--card-bg);
       border: 1px solid var(--card-border);
@@ -107,11 +96,9 @@
     }
     .v-header { display: flex; justify-content: space-between; align-items: center; }
     .v-sub { font-size: 10px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-muted); }
-    .v-name { font-size: 20px; font-weight: 900; color: #fff; margin-top: 2px; }
+    .v-name { font-size: 19px; font-weight: 900; color: #fff; margin-top: 2px; }
     .v-status-row { display: flex; align-items: center; gap: 6px; margin-top: 4px; font-size: 11px; font-weight: 600; color: var(--silver); }
-    .pulse-dot { width: 7px; height: 7px; background: var(--neon-red); border-radius: 50%; box-shadow: 0 0 10px var(--neon-red); animation: pulse 1.6s infinite; }
-    @keyframes pulse { 0%, 100% { opacity: 0.3; transform: scale(0.9); } 50% { opacity: 1; transform: scale(1.2); } }
-
+    .pulse-dot { width: 7px; height: 7px; background: var(--neon-red); border-radius: 50%; box-shadow: 0 0 10px var(--neon-red); }
     .btn-action-red {
       background: rgba(255, 26, 53, 0.12);
       border: 1px solid var(--neon-red);
@@ -122,8 +109,6 @@
       font-weight: 800;
       cursor: pointer;
     }
-
-    /* Live Vehicle Dials */
     .dials { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-top: 12px; }
     .dial-card {
       background: rgba(0, 0, 0, 0.6);
@@ -132,23 +117,8 @@
       padding: 8px 4px;
       text-align: center;
     }
-    .dial-val { font-size: 18px; font-weight: 900; color: #fff; font-feature-settings: "tnum"; }
+    .dial-val { font-size: 17px; font-weight: 900; color: #fff; font-feature-settings: "tnum"; }
     .dial-lbl { font-size: 8px; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-muted); margin-top: 2px; font-weight: 700; }
-
-    /* Energy Gauge */
-    .energy { margin-top: 12px; }
-    .energy-head { display: flex; justify-content: space-between; font-size: 11px; font-weight: 800; text-transform: uppercase; margin-bottom: 6px; }
-    .energy-bar { width: 100%; height: 8px; background: rgba(255, 255, 255, 0.08); border-radius: 10px; overflow: hidden; }
-    .energy-fill {
-      height: 100%;
-      width: 88%;
-      background: linear-gradient(90deg, var(--deep-red), var(--neon-red));
-      border-radius: 10px;
-      box-shadow: 0 0 14px var(--glow-red);
-      transition: width 0.4s ease;
-    }
-
-    /* Universal OBD-II & Open-Source Diagnostic Center */
     .obd-card {
       background: var(--card-bg);
       border: 1px solid rgba(0, 242, 254, 0.35);
@@ -167,15 +137,16 @@
       border-radius: 12px;
       padding: 10px;
       font-family: "SF Mono", Menlo, Consolas, monospace;
-      font-size: 11px;
+      font-size: 10px;
       color: #38bdf8;
-      height: 72px;
+      height: 90px;
       overflow-y: auto;
       line-height: 1.4;
+      word-break: break-all;
     }
     .obd-btn-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
     .obd-btn {
-      padding: 9px 10px;
+      padding: 10px 8px;
       border-radius: 10px;
       border: 1px solid var(--accent-cyan);
       background: rgba(0, 242, 254, 0.08);
@@ -185,8 +156,6 @@
       cursor: pointer;
       text-align: center;
     }
-
-    /* DTC Diagnostic Fault & Fixer Deck */
     .dtc-deck {
       background: var(--card-bg);
       border: 1px solid rgba(255, 26, 53, 0.4);
@@ -205,34 +174,8 @@
       font-size: 11px;
       display: flex;
       flex-direction: column;
-      gap: 3px;
+      gap: 2px;
     }
-    .dtc-code { font-weight: 900; color: #fff; }
-    .dtc-fix { color: var(--silver); font-size: 10px; }
-
-    /* Open Source Ecosystem Deck */
-    .oss-deck {
-      background: var(--card-bg);
-      border: 1px solid rgba(168, 85, 247, 0.3);
-      border-radius: 20px;
-      padding: 14px 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-    .oss-title { font-size: 11px; font-weight: 900; color: #c084fc; text-transform: uppercase; letter-spacing: 1px; }
-    .oss-chips { display: flex; flex-wrap: wrap; gap: 6px; }
-    .oss-chip {
-      background: rgba(168, 85, 247, 0.12);
-      border: 1px solid rgba(168, 85, 247, 0.4);
-      color: #f3e8ff;
-      font-size: 10px;
-      font-weight: 700;
-      padding: 4px 8px;
-      border-radius: 8px;
-    }
-
-    /* App Launcher Grid */
     .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
     .deck-card {
       background: var(--card-bg);
@@ -248,18 +191,15 @@
       font-size: 13px;
       font-weight: 800;
       backdrop-filter: blur(14px);
-      box-shadow: var(--glass-glow);
     }
-    .deck-card:active { transform: scale(0.96); border-color: var(--neon-red); background: rgba(255, 26, 53, 0.15); }
+    .deck-card:active { transform: scale(0.96); border-color: var(--neon-red); }
     .deck-icon { font-size: 24px; margin-bottom: 4px; }
-    .deck-hint { font-size: 9px; color: var(--text-muted); margin-top: 2px; font-weight: 500; }
-
-    /* Modal */
+    .deck-hint { font-size: 9px; color: var(--text-muted); margin-top: 2px; }
     .modal {
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.9);
+      background: rgba(0, 0, 0, 0.92);
       backdrop-filter: blur(20px);
       align-items: center;
       justify-content: center;
@@ -275,174 +215,122 @@
       padding: 20px;
       box-shadow: 0 0 45px rgba(255, 26, 53, 0.4);
     }
-    .v-item {
-      padding: 12px 14px;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 12px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 13px;
-      font-weight: 700;
-      margin-bottom: 8px;
-      cursor: pointer;
-    }
-    .v-item.active { border-color: var(--neon-red); color: var(--neon-red); background: rgba(255, 26, 53, 0.1); }
     .inp { width: 100%; padding: 12px; border-radius: 12px; border: 1px solid #334155; background: #000; color: #fff; margin-top: 8px; font-size: 13px; outline: none; }
   </style>
 </head>
 <body>
 
-  <!-- Secure Enclave Screen -->
+  <!-- Biometric Lock Screen -->
   <div class="biometric-screen" id="bioScreen">
     <div class="bio-icon">🛡️</div>
-    <div class="bio-title">SECURE ENCLAVE GATE</div>
-    <div class="bio-desc">Authenticate with Face ID or Passcode to initialize vehicle diagnostics and bus telemetry.</div>
-    <button class="btn-unlock" onclick="authenticateUser()">AUTHENTICATE MATRIX</button>
+    <div class="bio-title">SECURE ENCLAVE</div>
+    <div class="bio-desc">Authenticate with Face ID / Passcode to authorize hardware communication.</div>
+    <button class="btn-unlock" onclick="authenticateUser()">INITIALIZE SENSORS</button>
   </div>
 
   <div class="container" id="mainHUD" style="filter: blur(8px); pointer-events: none;">
-    <!-- Header -->
     <div class="header">
-      <div class="brand-title">MYSTHOOD // UNIVERSAL</div>
-      <div class="hud-badge">CAN-BUS v2.2</div>
+      <div class="brand-title">MYSTHOOD // TELEMETRY</div>
+      <div class="hud-badge" id="busProtocol">NO BUS DETECTED</div>
     </div>
 
-    <!-- Active Vehicle Profile HUD -->
+    <!-- Live Telemetry Readout -->
     <div class="telemetry-panel">
       <div class="v-header">
         <div>
-          <div class="v-sub">Selected Architecture</div>
-          <div class="v-name" id="vehicleName">Detecting Profile...</div>
-          <div class="v-status-row"><span class="pulse-dot"></span><span id="telemetryState">Universal CAN Gateway Online</span></div>
+          <div class="v-sub">Connected Machine</div>
+          <div class="v-name" id="vehicleName">Scanning CAN / OBD...</div>
+          <div class="v-status-row">
+            <span class="pulse-dot"></span>
+            <span id="telemetryState">Awaiting Hardware Handshake</span>
+          </div>
         </div>
-        <button class="btn-action-red" onclick="openVehicleModal()">DATABASE</button>
+        <button class="btn-action-red" onclick="openVehicleModal()">CONFIG</button>
       </div>
 
-      <!-- Live Dials (Gas, EV, Diesel & Concept) -->
+      <!-- Real Live Hardware Dials -->
       <div class="dials">
         <div class="dial-card">
-          <div class="dial-val" id="liveSpeed">0</div>
-          <div class="dial-lbl">MPH Live</div>
+          <div class="dial-val" id="liveSpeed">--</div>
+          <div class="dial-lbl">MPH (GPS / OBD)</div>
         </div>
         <div class="dial-card">
-          <div class="dial-val" id="liveRPM">750</div>
-          <div class="dial-lbl" id="rpmLbl">RPM / Motor</div>
+          <div class="dial-val" id="liveRPM">--</div>
+          <div class="dial-lbl">Engine RPM</div>
         </div>
         <div class="dial-card">
-          <div class="dial-val" id="liveTemp">195°F</div>
-          <div class="dial-lbl" id="tempLbl">Coolant</div>
+          <div class="dial-val" id="liveTemp">--</div>
+          <div class="dial-lbl">Coolant Temp</div>
         </div>
         <div class="dial-card">
-          <div class="dial-val" id="liveLoad">18%</div>
+          <div class="dial-val" id="liveLoad">--</div>
           <div class="dial-lbl">Engine Load</div>
         </div>
       </div>
-
-      <!-- Energy / Fuel Matrix -->
-      <div class="energy">
-        <div class="energy-head">
-          <span style="color: var(--neon-red);" id="energyLabel">⚡ Energy Core</span>
-          <span id="energyVal" style="color: #fff;">88%</span>
-        </div>
-        <div class="energy-bar">
-          <div class="energy-fill" id="energyFill"></div>
-        </div>
-        <div style="display:flex; justify-content:space-between; margin-top:6px; font-size:11px; color:var(--text-muted);">
-          <span>Range: <b id="estRange" style="color:#fff;">348 mi</b></span>
-          <span id="busProtocol">Protocol: ISO 15765-4 (CAN 11/500)</span>
-        </div>
-      </div>
     </div>
 
-    <!-- Universal OBD-II BLE & Wi-Fi Gateway -->
+    <!-- Live ELM327 BLE Adapter Terminal -->
     <div class="obd-card">
       <div class="obd-head">
-        <span class="obd-title">🔌 Universal OBD-II Hardware Link</span>
-        <span style="font-size:10px; color:var(--accent-cyan);" id="obdHardware">ELM327 / STN Ready</span>
+        <span class="obd-title">⚡ Physical OBD-II BLE Transceiver</span>
+        <span style="font-size:10px; color:var(--accent-cyan);" id="obdHardware">ELM327 / STN Bridge</span>
       </div>
       <div class="obd-terminal" id="obdTerminal">
-        > AT Z (Reset Interface)... OK<br>
-        > AT SP 0 (Auto Protocol)... ISO 15765-4 CAN<br>
-        > 0100 (Supported PIDs)... 41 00 BE 3E B8 11
+        [SYSTEM] Ready for hardware link.<br>
+        [SYSTEM] Note: In iOS Safari, open via Bluefy WebBLE app to access the Bluetooth antenna directly.
       </div>
       <div class="obd-btn-row">
-        <button class="obd-btn" onclick="connectOBD_BLE()">⚡ Pair BLE OBD Adapter</button>
-        <button class="obd-btn" onclick="readLiveDTC()">🔍 Query Live DTCs (Mode 03)</button>
-        <button class="obd-btn" onclick="clearDTCs()" style="border-color:var(--neon-red); color:var(--neon-red);">❌ Clear Trouble Codes (04)</button>
-        <button class="obd-btn" onclick="queryVIN()">📋 Query VIN & Calibration</button>
+        <button class="obd-btn" onclick="connectOBD_BLE()">🔌 Connect BLE Scanner</button>
+        <button class="obd-btn" onclick="requestDTCs()">🔍 Scan Engine DTCs (03)</button>
+        <button class="obd-btn" onclick="clearDTCs()" style="border-color:var(--neon-red); color:var(--neon-red);">❌ Clear MIL / DTCs (04)</button>
+        <button class="obd-btn" onclick="requestVIN()">📋 Query Physical VIN (09)</button>
       </div>
     </div>
 
-    <!-- Diagnostic Trouble Codes & Actionable Fixes -->
+    <!-- Live Diagnostic Trouble Codes -->
     <div class="dtc-deck">
       <div class="dtc-title">
-        <span>🔧 Diagnostic Faults & Repair Recommendations</span>
-        <span id="dtcCount" style="color:var(--text-muted);">2 Active Codes</span>
+        <span>🔧 Diagnostic Trouble Codes</span>
+        <span id="dtcCount" style="color:var(--text-muted);">No scan executed</span>
       </div>
       <div id="dtcList" style="display:flex; flex-direction:column; gap:6px;">
-        <div class="dtc-item">
-          <div class="dtc-code">P0300 - Random/Multiple Cylinder Misfire</div>
-          <div class="dtc-fix"><b>Recommended Fix:</b> Inspect spark plug gaps, ignition coils #1-4, and verify fuel injector pulse.</div>
-        </div>
-        <div class="dtc-item">
-          <div class="dtc-code">P0420 - Catalyst System Efficiency Below Threshold (Bank 1)</div>
-          <div class="dtc-fix"><b>Recommended Fix:</b> Verify Downstream O2 sensor voltage oscillation before replacing catalytic converter.</div>
-        </div>
+        <div style="font-size:11px; color:var(--text-muted);">Connect scanner to read diagnostic trouble codes from the ECU.</div>
       </div>
     </div>
 
-    <!-- Open Source Ecosystem Deck -->
-    <div class="oss-deck">
-      <div class="oss-title">⚡ Supported Open Source Architectures & Protocols</div>
-      <div class="oss-chips">
-        <span class="oss-chip">OpenPilot (comma.ai DBC)</span>
-        <span class="oss-chip">Python-OBD Engine</span>
-        <span class="oss-chip">SocketCAN Gateway</span>
-        <span class="oss-chip">ELM327 / STN1110</span>
-        <span class="oss-chip">UDS / ISO 14229</span>
-        <span class="oss-chip">WWH-OBD (ISO 27145)</span>
-      </div>
-    </div>
-
-    <!-- Connected App Deck -->
+    <!-- Connected App Launchers -->
     <div class="grid">
-      <a href="youtube://" class="deck-card"><span class="deck-icon">▶️</span>YouTube<span class="deck-hint">Online / Hotspot</span></a>
-      <a href="music://" class="deck-card"><span class="deck-icon">🎵</span>Apple Music<span class="deck-hint">Offline Stash</span></a>
-      <a href="maps://" class="deck-card"><span class="deck-icon">🗺️</span>Apple Maps<span class="deck-hint">Offline Vectors</span></a>
-      <a href="comgooglemaps://" class="deck-card"><span class="deck-icon">📍</span>Google Maps<span class="deck-hint">Satellite Terrain</span></a>
-      <a href="waze://" class="deck-card"><span class="deck-icon">🚗</span>Waze<span class="deck-hint">Police Radar</span></a>
-      <a href="podcasts://" class="deck-card"><span class="deck-icon">🎙️</span>Podcasts<span class="deck-hint">Downloaded Audio</span></a>
-      <a href="shortcuts://run-shortcut?name=Car%20Connect" class="deck-card"><span class="deck-icon">⚡</span>Car Sync<span class="deck-hint">Automate Volume & BT</span></a>
-      <a href="App-Prefs:root=Bluetooth" class="deck-card"><span class="deck-icon">📶</span>Bluetooth<span class="deck-hint">Pair Hardware</span></a>
+      <a href="youtube://" class="deck-card"><span class="deck-icon">▶️</span>YouTube<span class="deck-hint">Media Stream</span></a>
+      <a href="music://" class="deck-card"><span class="deck-icon">🎵</span>Music<span class="deck-hint">Offline Audio</span></a>
+      <a href="maps://" class="deck-card"><span class="deck-icon">🗺️</span>Apple Maps<span class="deck-hint">Vector HUD</span></a>
+      <a href="comgooglemaps://" class="deck-card"><span class="deck-icon">📍</span>Google Maps<span class="deck-hint">Live Terrain</span></a>
+      <a href="waze://" class="deck-card"><span class="deck-icon">🚗</span>Waze<span class="deck-hint">Radar Alerts</span></a>
+      <a href="shortcuts://run-shortcut?name=Car%20Connect" class="deck-card"><span class="deck-icon">⚡</span>Car Sync<span class="deck-hint">Run Automation</span></a>
     </div>
   </div>
 
-  <!-- Vehicle Selection Modal -->
+  <!-- Settings & EV API Modal -->
   <div class="modal" id="vModal">
     <div class="modal-box">
-      <div style="font-size:16px; font-weight:900; color:#fff; margin-bottom:12px;">VEHICLE & CONCEPT FLEET</div>
-      <div id="vList" style="max-height:240px; overflow-y:auto;"></div>
-      <input type="text" id="customCarName" class="inp" placeholder="Register vehicle (e.g. 2024 Ford F-150, Cybercab)...">
-      <button class="btn-action-red" style="width:100%; margin-top:8px;" onclick="addCustomVehicle()">+ Add Vehicle Profile</button>
-      <button class="btn-action-red" style="width:100%; margin-top:6px; background:#1e293b; border-color:#334155;" onclick="closeVehicleModal()">Done</button>
+      <div style="font-size:15px; font-weight:900; color:#fff; margin-bottom:6px;">SMART EV / FLEET API BRIDGE</div>
+      <div style="font-size:11px; color:var(--text-muted); margin-bottom:12px;">Enter your live vehicle cloud telemetry endpoint (e.g. Smartcar, Enode, or Tesla Fleet Webhook) to sync live EV pack data:</div>
+      <input type="url" id="evWebhookURL" class="inp" placeholder="https://your-api.com/v1/vehicle/status">
+      <button class="btn-action-red" style="width:100%; margin-top:10px;" onclick="saveEVTelemetryHook()">Save & Sync Cloud Telemetry</button>
+      <button class="btn-action-red" style="width:100%; margin-top:6px; background:#1e293b; border-color:#334155;" onclick="closeVehicleModal()">Close</button>
     </div>
   </div>
 
   <script>
-    // 1. SERVICE WORKER REGISTRATION (OFFLINE SUPPORT)
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('./sw.js').catch(() => {});
     }
 
-    // 2. FLAT FULL-BLEED RASTER PNG GENERATOR
+    // 1. GENERATE PWA RASTER ICON
     function generateRasterAppleIcon() {
       const canvas = document.createElement("canvas");
       canvas.width = 512;
       canvas.height = 512;
       const ctx = canvas.getContext("2d");
-
       const bgGrad = ctx.createRadialGradient(256, 256, 10, 256, 256, 360);
       bgGrad.addColorStop(0, "#140205");
       bgGrad.addColorStop(0.6, "#07070a");
@@ -466,14 +354,6 @@
       ctx.arc(256, 256, 126, 0, Math.PI * 2);
       ctx.stroke();
       ctx.restore();
-
-      ctx.strokeStyle = "#ffffff";
-      ctx.lineWidth = 4;
-      ctx.lineCap = "round";
-      ctx.beginPath(); ctx.moveTo(95, 256); ctx.lineTo(135, 256); ctx.stroke();
-      ctx.beginPath(); ctx.moveTo(377, 256); ctx.lineTo(417, 256); ctx.stroke();
-      ctx.beginPath(); ctx.moveTo(256, 95); ctx.lineTo(256, 125); ctx.stroke();
-      ctx.beginPath(); ctx.moveTo(256, 387); ctx.lineTo(256, 417); ctx.stroke();
 
       ctx.save();
       ctx.shadowColor = "#ff1236";
@@ -505,8 +385,6 @@
       ctx.fill();
 
       ctx.fillStyle = "#ffffff";
-      ctx.shadowColor = "#ffffff";
-      ctx.shadowBlur = 15;
       ctx.beginPath();
       ctx.arc(256, 256, 17, 0, Math.PI * 2);
       ctx.fill();
@@ -517,7 +395,7 @@
       document.getElementById("dynamicFavicon").href = png;
     }
 
-    // 3. SECURE ENCLAVE AUTHENTICATOR
+    // 2. SECURE ENCLAVE HARDWARE BIOMETRICS
     async function authenticateUser() {
       if (window.PublicKeyCredential) {
         try {
@@ -526,7 +404,7 @@
           await navigator.credentials.create({
             publicKey: {
               challenge: challenge,
-              rp: { name: "Mysthood HUD" },
+              rp: { name: "Mysthood Universal HUD" },
               user: { id: Uint8Array.from("PILOT", c => c.charCodeAt(0)), name: "pilot@matrix", displayName: "Pilot" },
               pubKeyCredParams: [{ alg: -7, type: "public-key" }],
               authenticatorSelection: { authenticatorAttachment: "platform", userVerification: "required" },
@@ -547,129 +425,270 @@
       const hud = document.getElementById("mainHUD");
       hud.style.filter = "none";
       hud.style.pointerEvents = "all";
-      appendTerminal("> SECURE ENCLAVE VALIDATED: AES-256 SESSION KEY ACTIVE");
+      logTerm("[SECURITY] Secure Enclave hardware key validated.");
+      initLiveGPS();
+      pollEVCloudData();
     }
 
-    // 4. FLEET MATRIX (Gas, Diesel, EV, Vintage, Concept)
-    const FLEET = [
-      { name: "Tesla Model S Plaid", fuel: 88, range: 348, type: "EV", proto: "CAN-FD / Tesla Proprietary", rpm: "18,500 Motor RPM", temp: "84°F Battery Inverter" },
-      { name: "Porsche 911 GT3 RS (992)", fuel: 92, range: 310, type: "GAS", proto: "ISO 15765-4 (CAN 11/500)", rpm: "9,000 Flat-6", temp: "210°F Oil" },
-      { name: "Ford F-250 Super Duty 6.7L", fuel: 75, range: 520, type: "DIESEL", proto: "SAE J1939 Heavy Duty", rpm: "1,600 Turbodiesel", temp: "198°F EOT" },
-      { name: "1994 Toyota Supra Turbo (2JZ)", fuel: 65, range: 240, type: "VINTAGE", proto: "Toyota OBD-I DLC3 / Analog", rpm: "6,800 Inline-6", temp: "185°F Coolant" },
-      { name: "Cybercab Autonomous Concept", fuel: 99, range: 410, type: "CONCEPT", proto: "OpenPilot DBC / Drive-By-Wire", rpm: "Direct Steer-By-Wire", temp: "72°F Compute HW4" }
-    ];
-
-    function appendTerminal(msg) {
+    function logTerm(msg) {
       const term = document.getElementById("obdTerminal");
       term.innerHTML += "<br>" + msg;
       term.scrollTop = term.scrollHeight;
     }
 
-    // 5. HARDWARE OBD-II & ELM327 COMMAND ENGINE
+    // 3. REAL HARDWARE GNSS GPS SATELLITE SPEED
+    function initLiveGPS() {
+      if ("geolocation" in navigator) {
+        navigator.geolocation.watchPosition(
+          pos => {
+            if (pos.coords.speed !== null && pos.coords.speed >= 0) {
+              const realMph = Math.round(pos.coords.speed * 2.23694);
+              document.getElementById("liveSpeed").innerText = realMph;
+            }
+          },
+          err => {
+            logTerm("[GPS] Satellite lock error: " + err.message);
+          },
+          { enableHighAccuracy: true, maximumAge: 500 }
+        );
+      }
+    }
+
+    // 4. REAL ELM327 BLE OBD-II GATT BLUETOOTH ENGINE
+    let obdCharacteristic = null;
+    let obdDecoder = new TextDecoder();
+    let obdEncoder = new TextEncoder();
+    let rxBuffer = "";
+
+    // Standard BLE UART UUIDs for ELM327 (Veepeak, OBDLink, Carista, generic)
+    const BLE_SERVICES = [
+      "0000fff0-0000-1000-8000-00805f9b34fb",
+      "0000ffe0-0000-1000-8000-00805f9b34fb",
+      "e7810a71-73ae-499d-8c15-faa9aef0c3f2"
+    ];
+    const BLE_CHARS = [
+      "0000fff1-0000-1000-8000-00805f9b34fb",
+      "0000ffe1-0000-1000-8000-00805f9b34fb",
+      "bef8d6c9-9c21-4c9e-b632-bd58c1009f9f"
+    ];
+
     async function connectOBD_BLE() {
-      const term = document.getElementById("obdTerminal");
       if (!navigator.bluetooth) {
-        appendTerminal("> WebBluetooth unavailable. Active via iOS Shortcuts OBD bridge.");
+        logTerm("[ERROR] Web Bluetooth is disabled by Apple in Safari.");
+        logTerm("[FIX] Open this URL in the 'Bluefy' WebBLE Browser app on your iPhone.");
         return;
       }
       try {
-        appendTerminal("> Initiating BLE GATT inquiry for ELM327 / OBDLink...");
+        logTerm("[BLE] Requesting paired OBD-II peripheral...");
         const device = await navigator.bluetooth.requestDevice({
-          filters: [{ namePrefix: 'OBD' }, { namePrefix: 'V-LINK' }, { namePrefix: 'IOS-VLINK' }, { namePrefix: 'Veepeak' }],
-          optionalServices: [0xFFE0, 0xFFF0, 0x18F0]
+          acceptAllDevices: true,
+          optionalServices: BLE_SERVICES
         });
+
+        logTerm("[BLE] Connecting to GATT server on " + device.name + "...");
+        const server = await device.gatt.connect();
+
+        let service = null;
+        for (const sUuid of BLE_SERVICES) {
+          try { service = await server.getPrimaryService(sUuid); if (service) break; } catch {}
+        }
+        if (!service) throw new Error("Compatible OBD-II BLE GATT UART service not found.");
+
+        for (const cUuid of BLE_CHARS) {
+          try { obdCharacteristic = await service.getCharacteristic(cUuid); if (obdCharacteristic) break; } catch {}
+        }
+        if (!obdCharacteristic) throw new Error("UART characteristic not accessible.");
+
+        await obdCharacteristic.startNotifications();
+        obdCharacteristic.addEventListener('characteristicvaluechanged', handleOBDResponse);
+
         document.getElementById("obdHardware").innerText = "Linked: " + device.name;
-        appendTerminal("> Connected: " + device.name);
-        appendTerminal("> AT E0 (Echo Off)... OK");
-        appendTerminal("> AT L0 (Linefeeds Off)... OK");
-        appendTerminal("> 010C (Query Engine RPM)... 41 0C 1A F8 (1726 RPM)");
-      } catch (e) {
-        appendTerminal("> BLE probe canceled or device out of range.");
+        document.getElementById("telemetryState").innerText = "CAN Bus Connected";
+        logTerm("[BLE] Hardware Handshake established.");
+
+        // Send standard ELM327 initialization commands
+        await sendOBDCommand("AT Z");
+        await sendOBDCommand("AT E0");
+        await sendOBDCommand("AT SP 0");
+        await sendOBDCommand("01 00");
+        startLivePolling();
+      } catch (err) {
+        logTerm("[BLE ERROR] " + err.message);
       }
     }
 
-    function readLiveDTC() {
-      appendTerminal("> SEND: 03 (Request Emission-Related DTCs)");
-      setTimeout(() => {
-        appendTerminal("> RECV: 43 02 03 00 04 20");
-        appendTerminal("> PARSED: P0300 (Misfire), P0420 (Catalyst)");
-      }, 600);
+    async function sendOBDCommand(cmd) {
+      if (!obdCharacteristic) return;
+      logTerm("<span style='color:#fff'>> " + cmd + "</span>");
+      await obdCharacteristic.writeValue(obdEncoder.encode(cmd + "\r"));
+    }
+
+    function handleOBDResponse(event) {
+      const chunk = obdDecoder.decode(event.target.value);
+      rxBuffer += chunk;
+      if (rxBuffer.includes(">")) {
+        const lines = rxBuffer.replace(/>/g, "").trim().split(/[\r\n]+/);
+        lines.forEach(line => parseOBDLine(line.trim()));
+        rxBuffer = "";
+      }
+    }
+
+    function parseOBDLine(line) {
+      logTerm("<span style='color:#34d399'>< " + line + "</span>");
+
+      // Mode 01 PID 0C: Engine RPM -> Formula: ((A * 256) + B) / 4
+      if (line.startsWith("41 0C")) {
+        const parts = line.split(" ");
+        if (parts.length >= 4) {
+          const a = parseInt(parts[2], 16);
+          const b = parseInt(parts[3], 16);
+          const rpm = Math.round(((a * 256) + b) / 4);
+          document.getElementById("liveRPM").innerText = rpm;
+        }
+      }
+
+      // Mode 01 PID 05: Coolant Temp -> Formula: A - 40 (°C) converted to °F
+      if (line.startsWith("41 05")) {
+        const parts = line.split(" ");
+        if (parts.length >= 3) {
+          const a = parseInt(parts[2], 16);
+          const tempC = a - 40;
+          const tempF = Math.round((tempC * 9/5) + 32);
+          document.getElementById("liveTemp").innerText = tempF + "°F";
+        }
+      }
+
+      // Mode 01 PID 04: Engine Load -> Formula: (A * 100) / 255
+      if (line.startsWith("41 04")) {
+        const parts = line.split(" ");
+        if (parts.length >= 3) {
+          const a = parseInt(parts[2], 16);
+          const load = Math.round((a * 100) / 255);
+          document.getElementById("liveLoad").innerText = load + "%";
+        }
+      }
+
+      // Mode 03: DTC Response parsing
+      if (line.startsWith("43")) {
+        parseDTCResponse(line);
+      }
+
+      // Mode 09 PID 02: VIN response
+      if (line.startsWith("49 02")) {
+        const rawHex = line.replace(/49 02 \d{2}/g, "").replace(/\s+/g, "");
+        let vin = "";
+        for (let i = 0; i < rawHex.length; i += 2) {
+          const charCode = parseInt(rawHex.substr(i, 2), 16);
+          if (charCode >= 32 && charCode <= 126) vin += String.fromCharCode(charCode);
+        }
+        if (vin.length >= 10) {
+          document.getElementById("vehicleName").innerText = "VIN: " + vin;
+          logTerm("[IDENT] Physical VIN Decoded: " + vin);
+        }
+      }
+    }
+
+    function parseDTCResponse(line) {
+      const parts = line.replace(/43/g, "").trim().split(/\s+/);
+      const dtcContainer = document.getElementById("dtcList");
+      dtcContainer.innerHTML = "";
+      let found = 0;
+
+      for (let i = 0; i < parts.length; i += 2) {
+        if (!parts[i] || !parts[i+1]) continue;
+        const b1 = parseInt(parts[i], 16);
+        const b2 = parseInt(parts[i+1], 16);
+        if (b1 === 0 && b2 === 0) continue;
+
+        // SAE J2012 Standard DTC byte decode
+        const typeNum = (b1 & 0xC0) >> 6;
+        const types = ["P", "C", "B", "U"];
+        const d1 = (b1 & 0x30) >> 4;
+        const d2 = b1 & 0x0F;
+        const d3 = (b2 & 0xF0) >> 4;
+        const d4 = b2 & 0x0F;
+        const code = `${types[typeNum]}${d1}${d2.toString(16)}${d3.toString(16)}${d4.toString(16)}`.toUpperCase();
+
+        found++;
+        const item = document.createElement("div");
+        item.className = "dtc-item";
+        item.innerHTML = `<div style="font-weight:900; color:#fff;">FAULT: ${code}</div><div style="font-size:10px; color:#cbd5e1;">Live ECU Trouble Code reported via Mode 03.</div>`;
+        dtcContainer.appendChild(item);
+      }
+
+      document.getElementById("dtcCount").innerText = found + " Active Codes";
+      if (found === 0) {
+        dtcContainer.innerHTML = `<div style="font-size:11px; color:#34d399;">✓ No active Diagnostic Trouble Codes detected in ECU memory.</div>`;
+      }
+    }
+
+    let pollInterval = null;
+    function startLivePolling() {
+      if (pollInterval) clearInterval(pollInterval);
+      pollInterval = setInterval(async () => {
+        await sendOBDCommand("01 0C"); // Query RPM
+        await new Promise(r => setTimeout(r, 200));
+        await sendOBDCommand("01 05"); // Query Coolant Temp
+        await new Promise(r => setTimeout(r, 200));
+        await sendOBDCommand("01 04"); // Query Engine Load
+      }, 1000);
+    }
+
+    function requestDTCs() {
+      sendOBDCommand("03");
     }
 
     function clearDTCs() {
-      if (confirm("Send OBD Mode 04: Clear trouble codes and reset ECU learned adaptations?")) {
-        appendTerminal("> SEND: 04 (Clear DTCs / MIL Reset)");
-        setTimeout(() => {
-          appendTerminal("> RECV: 44 (DTCs Cleared, MIL Extinguished)");
-          document.getElementById("dtcList").innerHTML = `<div style="font-size:11px; color:#34d399; padding:8px;">✓ No Active Trouble Codes in ECU Memory.</div>`;
-          document.getElementById("dtcCount").innerText = "0 Active Codes";
-        }, 800);
+      if (confirm("Send Mode 04 to clear active DTCs and turn off Check Engine Light?")) {
+        sendOBDCommand("04");
+        document.getElementById("dtcList").innerHTML = `<div style="font-size:11px; color:#34d399;">Cleared MIL & Trouble Codes.</div>`;
+        document.getElementById("dtcCount").innerText = "0 Active Codes";
       }
     }
 
-    function queryVIN() {
-      appendTerminal("> SEND: 09 02 (Mode 09 VIN Request)");
-      setTimeout(() => {
-        appendTerminal("> RECV: 49 02 01 31 47 41 ... (VIN: 1G1YY22U6... Validated)");
-      }, 700);
+    function requestVIN() {
+      sendOBDCommand("09 02");
     }
 
-    function applyVehicle(car) {
-      localStorage.setItem("myst_active_car", car.name);
-      document.getElementById("vehicleName").innerText = car.name;
-      document.getElementById("energyVal").innerText = car.fuel + "%";
-      document.getElementById("energyFill").style.width = car.fuel + "%";
-      document.getElementById("estRange").innerText = car.range + " mi";
-      document.getElementById("busProtocol").innerText = "Protocol: " + car.proto;
-      document.getElementById("liveRPM").innerText = car.rpm.split(" ")[0];
-      document.getElementById("rpmLbl").innerText = car.rpm.split(" ").slice(1).join(" ");
-      document.getElementById("liveTemp").innerText = car.temp.split(" ")[0];
-      document.getElementById("tempLbl").innerText = car.temp.split(" ").slice(1).join(" ");
+    // 5. LIVE SMART EV CLOUD TELEMETRY BRIDGE
+    function saveEVTelemetryHook() {
+      const url = document.getElementById("evWebhookURL").value.trim();
+      if (!url) return;
+      localStorage.setItem("myst_ev_webhook", url);
+      closeVehicleModal();
+      pollEVCloudData();
+    }
 
-      const lbl = document.getElementById("energyLabel");
-      if (car.type === "EV" || car.type === "CONCEPT") {
-        lbl.innerText = "⚡ Energy Core";
-      } else {
-        lbl.innerText = "⛽ Fuel Reserve";
+    async function pollEVCloudData() {
+      const endpoint = localStorage.getItem("myst_ev_webhook");
+      if (!endpoint) return;
+      try {
+        logTerm("[CLOUD] Polling live EV fleet API...");
+        const res = await fetch(endpoint, { headers: { 'Accept': 'application/json' } });
+        const data = await res.json();
+        // Standard payload: { battery: 85, range: 310, model: "Tesla Model 3" }
+        if (data.model) document.getElementById("vehicleName").innerText = data.model;
+        if (data.battery !== undefined) {
+          document.getElementById("telemetryState").innerText = "Cloud Synced: " + data.battery + "% SoC";
+        }
+        logTerm("[CLOUD] Vehicle telemetry refreshed from API.");
+      } catch (e) {
+        logTerm("[CLOUD API] Sync failed: " + e.message);
       }
     }
 
     function openVehicleModal() {
-      const container = document.getElementById("vList");
-      container.innerHTML = "";
-      FLEET.forEach(c => {
-        const item = document.createElement("div");
-        item.className = "v-item";
-        item.innerHTML = `<span>${c.name} [${c.type}]</span><span style="opacity:0.6">${c.fuel}%</span>`;
-        item.onclick = () => { applyVehicle(c); closeVehicleModal(); };
-        container.appendChild(item);
-      });
+      const hook = localStorage.getItem("myst_ev_webhook") || "";
+      document.getElementById("evWebhookURL").value = hook;
       document.getElementById("vModal").style.display = "flex";
     }
 
-    function addCustomVehicle() {
-      const val = document.getElementById("customCarName").value.trim();
-      if (!val) return;
-      const custom = { name: val, fuel: 90, range: 320, type: "CUSTOM", proto: "Universal OBD-II / CAN", rpm: "800 RPM", temp: "190°F Engine" };
-      FLEET.unshift(custom);
-      document.getElementById("customCarName").value = "";
-      applyVehicle(custom);
-      closeVehicleModal();
+    function closeVehicleModal() {
+      document.getElementById("vModal").style.display = "none";
     }
-
-    function closeVehicleModal() { document.getElementById("vModal").style.display = "none"; }
 
     window.onload = () => {
       generateRasterAppleIcon();
-      applyVehicle(FLEET[0]);
-
-      if ("geolocation" in navigator) {
-        navigator.geolocation.watchPosition(pos => {
-          if (pos.coords.speed && pos.coords.speed >= 0) {
-            document.getElementById("liveSpeed").innerText = Math.round(pos.coords.speed * 2.23694);
-          }
-        }, () => {}, { enableHighAccuracy: true });
-      }
     };
   </script>
 </body>
