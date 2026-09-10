@@ -7,12 +7,10 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Mysthood HUD">
   
-  <!-- Root SVG Icon Linkages for Safari and iOS PWA Engine -->
-  <link rel="icon" type="image/svg+xml" href="icon.svg">
-  <link rel="alternate icon" href="icon.svg">
-  <link rel="mask-icon" href="icon.svg" color="#ff1a35">
-  <link rel="apple-touch-icon" href="icon.svg">
-  
+  <!-- Dynamic Raster PNG Apple Touch Icon Placeholder -->
+  <link id="dynamicAppleIcon" rel="apple-touch-icon" href="">
+  <link rel="icon" type="image/png" id="dynamicFavicon" href="">
+
   <title>Mysthood Cyberdeck // Crimson</title>
   <style>
     :root {
@@ -44,7 +42,7 @@
     }
     .container { width: 100%; max-width: 500px; display: flex; flex-direction: column; gap: 12px; }
 
-    /* Branding Header */
+    /* Header */
     .header { display: flex; justify-content: space-between; align-items: center; padding: 0 4px; }
     .brand-title {
       font-size: 21px;
@@ -68,7 +66,7 @@
       box-shadow: 0 0 14px var(--glow-red);
     }
 
-    /* Primary Vehicle Telemetry Card */
+    /* Telemetry HUD Panel */
     .telemetry-panel {
       background: var(--card-bg);
       border: 1px solid var(--card-border);
@@ -98,7 +96,7 @@
       box-shadow: 0 0 12px var(--glow-red);
     }
 
-    /* Live Dials (Speed, G-Force, Temp) */
+    /* Dials */
     .dials { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-top: 12px; }
     .dial-card {
       background: rgba(0, 0, 0, 0.6);
@@ -110,7 +108,7 @@
     .dial-val { font-size: 22px; font-weight: 900; color: #fff; font-feature-settings: "tnum"; }
     .dial-lbl { font-size: 9px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-top: 2px; font-weight: 700; }
 
-    /* Energy & Battery Gauge */
+    /* Energy Bar */
     .energy { margin-top: 12px; }
     .energy-head { display: flex; justify-content: space-between; font-size: 11px; font-weight: 800; text-transform: uppercase; margin-bottom: 6px; }
     .energy-bar { width: 100%; height: 8px; background: rgba(255, 255, 255, 0.08); border-radius: 10px; overflow: hidden; }
@@ -123,7 +121,7 @@
       transition: width 0.4s ease;
     }
 
-    /* Dynamic Profile Deployment Card */
+    /* Config Installer Banner */
     .config-box {
       background: rgba(18, 18, 24, 0.85);
       border: 1px dashed var(--card-border);
@@ -153,7 +151,7 @@
       cursor: default;
     }
 
-    /* Service Diagnostic Status */
+    /* Diagnostics Banner */
     .service-banner {
       display: flex;
       align-items: center;
@@ -167,7 +165,7 @@
     .service-txt { display: flex; align-items: center; gap: 8px; font-weight: 700; color: #fff; }
     .service-badge { background: var(--neon-red); color: #fff; font-size: 9px; font-weight: 900; padding: 2px 7px; border-radius: 6px; }
 
-    /* Driving Dynamics Profiles */
+    /* Modes */
     .modes { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
     .mode-btn {
       background: rgba(255, 255, 255, 0.04);
@@ -189,7 +187,7 @@
       box-shadow: 0 0 14px var(--glow-red);
     }
 
-    /* Connected App Grid */
+    /* Apps Grid */
     .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
     .deck-card {
       background: var(--card-bg);
@@ -213,7 +211,7 @@
     .deck-icon { font-size: 24px; margin-bottom: 4px; }
     .deck-hint { font-size: 9px; color: var(--text-muted); margin-top: 2px; font-weight: 500; }
 
-    /* Vehicle Switcher & Custom Car Modal */
+    /* Modal */
     .modal {
       display: none;
       position: fixed;
@@ -288,7 +286,7 @@
         </div>
       </div>
 
-      <!-- Core Pack Status -->
+      <!-- Energy Core -->
       <div class="energy">
         <div class="energy-head">
           <span style="color: var(--neon-red);" id="energyLabel">⚡ Core Pack</span>
@@ -304,7 +302,7 @@
       </div>
     </div>
 
-    <!-- Dynamic In-App Configuration Installer -->
+    <!-- Config Profile Installer Bar -->
     <div class="config-box">
       <div>
         <div style="font-size:12px; font-weight:800; color:#fff;">Apple MobileConfig</div>
@@ -313,7 +311,7 @@
       <button class="cfg-btn" id="cfgBtn" onclick="handleConfigAction()">INSTALL CONFIG</button>
     </div>
 
-    <!-- Diagnostic Alerts -->
+    <!-- Diagnostics Alert Banner -->
     <div class="service-banner">
       <div class="service-txt">
         <span>⚠️</span>
@@ -343,7 +341,7 @@
     </div>
   </div>
 
-  <!-- Manual Vehicle Selection Modal -->
+  <!-- Vehicle Selection Modal -->
   <div class="modal" id="vModal">
     <div class="modal-box">
       <div style="font-size:16px; font-weight:900; color:#fff; margin-bottom:12px;">SELECT VEHICLE PROFILE</div>
@@ -355,6 +353,64 @@
   </div>
 
   <script>
+    // 1. GENERATE RASTER PNG ICON ON-THE-FLY (Fixes iOS SVG Ignored Bug)
+    let generatedPNGDataURL = "";
+    function generateRasterAppleIcon() {
+      const canvas = document.createElement("canvas");
+      canvas.width = 180;
+      canvas.height = 180;
+      const ctx = canvas.getContext("2d");
+
+      // Dark Obsidian Canvas Background with Rounded Profile
+      ctx.fillStyle = "#040407";
+      ctx.fillRect(0, 0, 180, 180);
+
+      // Crimson Gradient Background Ring
+      const grad = ctx.createRadialGradient(90, 40, 10, 90, 90, 120);
+      grad.addColorStop(0, "#42000a");
+      grad.addColorStop(1, "#040407");
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, 180, 180);
+
+      // Red Outer Shield Glow
+      ctx.strokeStyle = "#ff1a35";
+      ctx.lineWidth = 4;
+      ctx.strokeRect(6, 6, 168, 168);
+
+      // Mysthood Crimson Emblem (Apex & Wings)
+      ctx.fillStyle = "#ff1a35";
+      ctx.beginPath();
+      ctx.moveTo(90, 30);
+      ctx.lineTo(135, 105);
+      ctx.lineTo(110, 105);
+      ctx.lineTo(90, 72);
+      ctx.lineTo(70, 105);
+      ctx.lineTo(45, 105);
+      ctx.closePath();
+      ctx.fill();
+
+      // Lower Wings
+      ctx.beginPath();
+      ctx.moveTo(90, 145);
+      ctx.lineTo(60, 115);
+      ctx.lineTo(75, 115);
+      ctx.lineTo(90, 130);
+      ctx.lineTo(105, 115);
+      ctx.lineTo(120, 115);
+      ctx.closePath();
+      ctx.fill();
+
+      // Central White Core Dot
+      ctx.fillStyle = "#ffffff";
+      ctx.beginPath();
+      ctx.arc(90, 90, 6, 0, Math.PI * 2);
+      ctx.fill();
+
+      generatedPNGDataURL = canvas.toDataURL("image/png");
+      document.getElementById("dynamicAppleIcon").href = generatedPNGDataURL;
+      document.getElementById("dynamicFavicon").href = generatedPNGDataURL;
+    }
+
     const DEFAULT_VEHICLES = [
       { name: "Tesla Model S Plaid", battery: 88, range: 348, service: "Normal - Next Checkup in 8,400 mi", code: "OK 00", psi: "41 | 41 | 41 | 41" },
       { name: "Porsche Taycan Turbo", battery: 74, range: 242, service: "Brake Fluid Flush in 1,200 mi", code: "WARN 04", psi: "38 | 38 | 39 | 39" },
@@ -369,7 +425,8 @@
     }
 
     function init() {
-      // Check installation flag passed via MobileConfig URL
+      generateRasterAppleIcon();
+
       const params = new URLSearchParams(window.location.search);
       if (params.get("installed") === "true") {
         localStorage.setItem("myst_config_installed", "true");
@@ -382,11 +439,9 @@
         document.getElementById("cfgSubText").innerText = "Profile active & managing vehicle Wi-Fi";
       }
 
-      // Load active vehicle
       const savedCar = localStorage.getItem("myst_active_vehicle") || DEFAULT_VEHICLES[0].name;
       applyVehicle(savedCar);
 
-      // Start zero-internet GNSS GPS Speedometer
       if ("geolocation" in navigator) {
         navigator.geolocation.watchPosition(pos => {
           if (pos.coords.speed && pos.coords.speed >= 0) {
@@ -462,11 +517,11 @@
       deployMobileConfig();
     }
 
-    // Direct Browser-Generated Profile Download linked to current domain & icon.svg
+    // Embeds the generated raster PNG base64 straight into the .mobileconfig payload
     function deployMobileConfig() {
       const baseURL = window.location.origin + window.location.pathname.replace(/\/[^\/]*$/, '/');
       const liveLaunchURL = baseURL + "?installed=true";
-      const iconURL = baseURL + "icon.svg";
+      const pureBase64 = generatedPNGDataURL.replace(/^data:image\/png;base64,/, "");
 
       const configXML = `<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
@@ -489,7 +544,7 @@
             <key>PayloadDisplayName</key><string>Mysthood HUD</string>
             <key>Label</key><string>Mysthood HUD</string>
             <key>URL</key><string>${liveLaunchURL}</string>
-            <key>IconURL</key><string>${iconURL}</string>
+            <key>Icon</key><data>${pureBase64}</data>
             <key>FullScreen</key><true/>
             <key>IsRemovable</key><true/>
             <key>Precomposed</key><true/>
